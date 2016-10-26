@@ -1,6 +1,9 @@
 import java.util.*;
 import java.lang.*;
 
+/**
+* contien le graphe de la ville avec les rues comme sommet et les places comme arrete
+*/
 public class listeSuccesseur implements Comparable, Comparator{
 	private String nom; //nom de cette rue
 	private String deb; //nom de la place a une extremite
@@ -9,6 +12,13 @@ public class listeSuccesseur implements Comparable, Comparator{
 
 	private boolean visite; //pour le parcour : note si le noeud a deja ete visite
 
+	/**
+	* construit le sommet corespondant a une rue entre deux places
+	* 
+	* @param nom le nom de la rue
+	* @param deb une extremite de la rue
+	* @param fin l'autre extremite de la rue
+	*/
 	public listeSuccesseur(String nom, String deb, String fin) {
 		this.nom = nom;
 		this.deb = deb;
@@ -17,21 +27,30 @@ public class listeSuccesseur implements Comparable, Comparator{
 		this.visite = false;
 	}
 
+	/**
+	* ajoute cette rue comme sucesseur de celle ci
+	* <p>
+	* deux rue sont considere comme adjacente si elles ont une extremite en commun
+	*
+	* @param nouvsucc la rue a ajouter dans l'ensemble des successeur de cette rue
+	*/
 	public void ajoutSucc(listeSuccesseur nouvsucc) {
 		this.succ.add(nouvsucc);
 	}
 
-	public String getNom() { return this.nom;}
-
+	/**
+	* renvoi l'ensemble des successeur de cette rue
+	* 
+	* @return l'ensemble des rues adjacentes a celle ci
+	*/
 	public TreeSet<listeSuccesseur> getSucc() {return this.succ;}
 
+	/**
+	* 
+	*/
 	public String getdeb() {return this.deb;}
 
 	public String getfin() {return this.fin;}
-
-	public void marque() {this.visite = true;}
-
-	public boolean dejavisite() {return this.visite;}
 
 	public int compareTo(Object lautre) {
 		listeSuccesseur lautreCast = (listeSuccesseur)lautre;

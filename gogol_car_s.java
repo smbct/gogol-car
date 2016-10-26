@@ -5,10 +5,18 @@ import java.lang.Integer;
 import java.util.TreeSet;
 import java.io.IOException;
 
+/**
+* classe qui implement l'algorithme gogolS
+*/
 public class gogol_car_s {
 
-	private listeSuccesseur racine;
+	private listeSuccesseur racine; //noeud qui nous sert de point d'entre dans le graphe
 	
+    /**
+    * lit le fichier d'intance passe en parametre pour preparer le graph qui nous permet de resoudre le probleme
+    *
+    * @param fichier le chemin du fichier qui contien l'instance selon le formatage decrit
+    */
 	public gogol_car_s(String fichier) {
         FileReader fr;
         try {
@@ -52,14 +60,30 @@ public class gogol_car_s {
         }
     }	
 
+    @Override
+    /**
+    * ecrit tout le graphe de la ville
+    */
     public String toString() {
         return racine.toString();
     }
 
+    /**
+    * effectue un parcours en profondeur du graphe pour obtenir le parcour de la gogol car
+    *
+    * @return la chaine de caractère dans laquelle est ecrit le chemin a suivre
+    */
     public String parcours() {
         return "depart de " + encommun(racine, racine.getSucc().first()) + " : \n" + racine.parcours();
     }
 
+    /**
+    * determine la place de laquelle on part quand on parcours ces deux rues dans l'ordre
+    *
+    * @param depart la premiere rue que l'on parcours
+    * @param arrive la deuxieme rue quel'on parcours
+    * @return le nom de la place de laquelle on part pour parcourir depart puis arrive
+    */
     private String encommun(listeSuccesseur depart, listeSuccesseur arrive) {
         if ((depart.getdeb().equals(arrive.getdeb())) || (depart.getdeb().equals(arrive.getfin()))) {
             return depart.getfin();
