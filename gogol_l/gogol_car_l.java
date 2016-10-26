@@ -179,9 +179,9 @@ public class gogol_car_l {
     public static void main(String[] args) {
 
         gogol_car_l car = new gogol_car_l();
-        car.parser("../test.txt");
+        car.parser("../euler_city.txt");
 
-        // System.out.println(car);
+        System.out.println(car);
 
         arborescence arbo = car.anti_arborescence();
 
