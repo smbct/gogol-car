@@ -95,7 +95,7 @@ public class gogol_car_l {
     }
 
     /**
-     * @brief constructeur par défaut
+     * constructeur par défaut
      */
     public gogol_car_l() {
 
