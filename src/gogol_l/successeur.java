@@ -33,8 +33,8 @@ public class successeur {
 
     /**
      * ajout d'une rue à la liste des rues connectés à un sommet
-     * @sommet le numéro de la place
-     * @nomRue le nom de la rue
+     * @param sommet le numéro de la place
+     * @param nomRue le nom de la rue
      */
     public void ajouter_rue(int sommet, String nomRue) {
         if(suivant == null) {
@@ -43,6 +43,14 @@ public class successeur {
         } else {
             suivant.ajouter_rue(sommet, nomRue);
         }
+    }
+
+    /**
+     * retourne le successeur suivant dans la liste des successeurs
+     * @return le successeur, peut être null
+     */
+    public successeur suivant() {
+        return suivant;
     }
 
 
