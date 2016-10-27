@@ -1,3 +1,5 @@
+package gogol_l;
+
 import java.util.ArrayList;
 import java.lang.String;
 
@@ -174,11 +176,153 @@ public class gogol_car_l {
     }
 
     /**
+     * Numérotation des arêtes du graphe en vue d'obtenir un circuit eulerien
+     * @param arbo une arborescence du graphe qui va permettre de numéroter
+     * @return la numérotation trouvée
+     */
+    private ArrayList<ArrayList<Integer>> numeroter(arborescence arbo) {
+
+        ArrayList<ArrayList<Integer>> numeros = new ArrayList<ArrayList<Integer>>(nbPlace);
+        for(int i = 0; i < nbPlace; i++) {
+            numeros.add(new ArrayList<Integer>(nbPlace));
+            for(int j = 0; j < nbPlace; j++) {
+                numeros.get(i).add(-1);
+            }
+        }
+
+        numeroter_rec(arbo, numeros);
+
+        System.out.print("   ");
+        for(int i = 0; i < nbPlace; i++) {
+            System.out.print(i + " ");
+            if(i < 10) {
+                System.out.print(" ");
+            }
+        }
+        System.out.println("");
+        for(int i = 0; i < nbPlace; i++) {
+            System.out.print(i + " ");
+            if(i < 10) {
+                System.out.print(" ");
+            }
+            for(int j = 0; j < nbPlace; j++) {
+                if(matrice.get(i).get(j)) {
+                    System.out.print(numeros.get(i).get(j) + "  ");
+                } else {
+                    System.out.print(".  ");
+                }
+            }
+            System.out.println("");
+        }
+
+        return numeros;
+    }
+
+    /**
+     * Calcule le cycle que doit effectuer la voiture de gogol
+     * @param numeros la numérotation du graphe
+     * @param racine la racine de l'arborescence
+     */
+    private void cycle_gogol(ArrayList<ArrayList<Integer>> numeros, int racine) {
+
+        ArrayList<ArrayList<Boolean>> utilise = new ArrayList<ArrayList<Boolean>>(nbPlace);
+        for(int i = 0; i < nbPlace; i++) {
+            utilise.add(new ArrayList<Boolean>(nbPlace));
+            for(int j = 0; j < nbPlace; j++) {
+                utilise.get(i).add(Boolean.FALSE);
+            }
+        }
+
+        boolean continuer = Boolean.TRUE;
+
+        ArrayList<Integer> chemin = new ArrayList<Integer>();
+
+        int sommetCourant = racine;
+        chemin.add(sommetCourant);
+
+        while(continuer) {
+
+            // recherche du prochain sommet
+            int sommetMin = -1;
+            int numeroMin = -1;
+            for(int j = 0; j < nbPlace; j++) {
+                if(matrice.get(sommetCourant).get(j)) {
+
+                    if(!utilise.get(sommetCourant).get(j) && (sommetMin == -1 || numeros.get(sommetCourant).get(j) < numeroMin)) {
+                        sommetMin = j;
+                        numeroMin = numeros.get(sommetCourant).get(j);
+                    }
+
+                }
+            }
+
+            // si un sommet a été trouvé, la recherche continue
+            if(sommetMin != -1) {
+                utilise.get(sommetCourant).set(sommetMin, Boolean.TRUE);
+                utilise.get(sommetMin).set(sommetCourant, Boolean.TRUE);
+                chemin.add(sommetMin);
+                sommetCourant = sommetMin;
+            } else {
+                continuer = false;
+            }
+
+        }
+
+        for(int sommet : chemin) {
+            System.out.print(places.get(sommet) + ", ");
+        }
+        System.out.println("");
+
+    }
+
+    /**
+     * Numérotation des sommets du graphe à partir de l'anti-arborescence de manière récurisive
+     * @param arbo l'arborescence utilisée pour numéroter
+     * @param numeros les numeros des arêtes de la ville
+     */
+    private void numeroter_rec(arborescence arbo, ArrayList<ArrayList<Integer>> numeros) {
+
+        int sommet = arbo.get_sommet();
+        int sommetPere = -1;
+        if(arbo.get_pere() != null) {
+            sommetPere = arbo.get_pere().get_sommet();
+        }
+
+        // calcul du nombre d'arc, nécessaire pour avoir le numéro du sommet
+        int nbArcS = 0;
+        for(int j = 0; j < nbPlace; j++) {
+            if(matrice.get(sommet).get(j)) {
+                nbArcS ++;
+                if(sommetPere == -1) { // initialisation du sommet si c'estla racine
+                    sommetPere = j;
+                }
+            }
+        }
+
+        // initialisation du numéro
+        numeros.get(sommet).set(sommetPere, nbArcS);
+
+        // fin de la numérotation des arcs sortant
+        int numero = nbArcS - 1;
+        for(int j = 0; j < nbPlace; j++) {
+            if(matrice.get(sommet).get(j) && j != sommetPere) {
+                numeros.get(sommet).set(j, numero);
+                numero --;
+            }
+        }
+
+        // numérotation récursive des autres sommets
+        for(arborescence fils : arbo.get_fils()) {
+            numeroter_rec(fils, numeros);
+        }
+    }
+
+    /**
      * fonction de test de la classe
      */
     public static void main(String[] args) {
 
-        gogol_car_l car = new gogol_car_l();
+        /*gogol_car_l car = new gogol_car_l();
         car.parser("../euler_city.txt");
 
         System.out.println(car);
@@ -186,6 +330,12 @@ public class gogol_car_l {
         arborescence arbo = car.anti_arborescence();
 
         System.out.println(arbo);
+
+        ArrayList<ArrayList<Integer>> numeros = car.numeroter(arbo);
+
+        car.cycle_gogol(numeros, arbo.get_sommet());*/
+
+        successeur suc = new successeur(0, "test");
 
     }
 

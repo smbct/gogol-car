@@ -1,3 +1,4 @@
+package gogol_l;
 
 import java.util.ArrayList;
 
@@ -13,16 +14,41 @@ public class arborescence {
 
     public arborescence(int sommet) {
         this.sommet = sommet;
+        this.pere = null;
         fils = new ArrayList<arborescence>();
     }
 
     /**
-     * @brief ajout d'un sommet fils à l'arborescence
+     * ajout d'un sommet fils à l'arborescence
      * @param fils le fils à ajouter à l'arborescence
      */
     public void ajouterFils(arborescence fils) {
         this.fils.add(fils);
         fils.pere = this;
+    }
+
+    /**
+     * getter du pere du noeud
+     * @return le pere, peut être null
+     */
+    public arborescence get_pere() {
+        return pere;
+    }
+
+    /**
+     * retourne la liste des fils
+     * @return la liste des fils
+     */
+    public ArrayList<arborescence> get_fils() {
+        return fils;
+    }
+
+    /**
+     * retourne le numéro du sommet
+     * @return le numéro du sommet
+     */
+    public int get_sommet() {
+        return sommet;
     }
 
     /**
