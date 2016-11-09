@@ -133,20 +133,20 @@ public class gogol_car_l {
     public void ajout_arrete (int deb, int fin) {
         successeur succ = listeSuccesseurs.get(deb);
         String nomRue;
-        
+
         //recherche du nom de la rue
-        while(succ != null) {
+        /*while(succ != null) {
             if () {
                 nomRue = succ.get_nomRue();
                 succ = null;
             } else {
                 succ = succ.suivant();
             }
-        }
+        }*/
 
         //ajout dans les deux sens
-        succ.ajouter_rue(new successeur(fin, nomRue)); //dans la liste de successeur de deb
-        listeSuccesseurs.get(fin)ajouter_rue(new successeur(deb, nomRue)); //dans la liste de successeur de fin
+        // succ.ajouter_rue(new successeur(fin, nomRue)); //dans la liste de successeur de deb
+        // listeSuccesseurs.get(fin)ajouter_rue(new successeur(deb, nomRue)); //dans la liste de successeur de fin
     }
 
     /**
@@ -219,7 +219,7 @@ public class gogol_car_l {
                 suc.numeroter(numFils);
                 numFils --;
             }
-            if(suc.get_sommet() == sommetPere || sommetPere == -1) {
+            else if(suc.get_sommet() == sommetPere || sommetPere == -1) {
                 suc.numeroter(degre.get(sommet));
                 // s'il n'y a pas de sommet père, le premier sommet est le plus grand
                 if(sommetPere == -1) {
