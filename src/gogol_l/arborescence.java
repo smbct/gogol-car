@@ -1,6 +1,7 @@
 package gogol_l;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * @class arborescence
@@ -49,6 +50,35 @@ public class arborescence {
      */
     public int get_sommet() {
         return sommet;
+    }
+
+    /**
+     * @brief retourne vrai ssi sommet est un fils de l'arborescence
+     * @param sommet le numéro du sommet à tester
+     * @return vrai ssi sommet est un fis de l'arbre
+     */
+    public boolean est_fils(int sommet) {
+        boolean res = Boolean.FALSE;
+
+        Iterator<arborescence> it = fils.iterator();
+
+        arborescence suiv;
+        while(!res && it.hasNext()) {
+            suiv = it.next();
+            if(suiv.get_sommet() == sommet) {
+                res = Boolean.TRUE;
+            }
+        }
+
+        return res;
+    }
+
+    /**
+     * @brief retourne le nombre de fils
+     * @return le nombre de fils
+     */
+    public int nb_fils() {
+        return fils.size();
     }
 
     /**
