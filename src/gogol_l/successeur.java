@@ -40,6 +40,14 @@ public class successeur {
     }
 
     /**
+    * retourne le nom de la rue
+    * @return le nom de la rue
+    */
+    public String get_nomRue() {
+        return nomRue;
+    }
+
+    /**
      * remet à faux tous les booléens de visite du graphe
      */
     public void raz_visite() {
