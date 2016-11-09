@@ -187,8 +187,10 @@ public class gogol_car_l {
 
             // si l'arc qui est dans l'anti-arborescence est trouvée, il prend le plus grand numéro
             // si c'est l'anti-racine, le numéro le plus grand est attribué de manière quelconque
+            // on s'assure à chaque fois de numéroter l'arc sortant correspondant à l'arc entrant de l'anti-racine de telle sorte qu'il ne soit pas le plus petit
             if(suc.get_sommet() == sommetPere || sommetPere == -1) {
                 suc.numeroter(degre.get(sommet));
+                // s'il n'y a pas de sommet père, le premier sommet est le plus grand
                 if(sommetPere == -1) {
                     sommetPere = suc.get_sommet(); // ce numéro ne sera pas réutilisé
                 }
@@ -263,7 +265,7 @@ public class gogol_car_l {
     public static void main(String[] args) {
 
         gogol_car_l car = new gogol_car_l();
-        car.parser("../instances/euler_city.txt");
+        car.parser(/*"../instances/euler_city.txt"*/"../instances/antCity.txt");
 
         System.out.println(car);
 

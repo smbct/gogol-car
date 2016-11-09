@@ -1,0 +1,74 @@
+Chaînes eulériennes, cycles eulériens d'un graphe non-orienté
+=============================================================
+
+On suppose le graphe connexe sans tenir compte des sommets isolés.
+(on ne tient pas compte des points (sommets) isolés, car pour le cycle eulérien ils n'ont strictement aucune utilité).
+
+Propriétés :
+------------
+a) si tous les degrés des sommets sont pairs, alors il existe un cycle eulérien (au moins un cycle).
+b) s'il existe deux sommets a et b et deux seulement de degrés impairs, alors il existe une chaîne eulérienne allant de a à b (et donc aussi une chaîne de b à a).
+c) dans les autres cas il n'y a ni cycle eulérien, ni chaîne eulérienne
+
+Algorithmes.
+------------
+Cycle eulérien d'après Claude Berge :
+Règle 1. On part d'un sommet a quelconque, et l'on suit une chaîne sans jamais utiliser deux fois la même arête.
+Règle 2. Arrivé en un sommet x distinct de a à la l-ième étape, on ne prendra jamais une arête qui, au moment considéré, est un isthme pour le graphe G_k engendré par les arêtes non encore utilisées (excepté si x est un sommet pendant de G_k).
+Règle 3. Si on arrive au sommet a, on repart par une arête quelconque nouvelle si elle existe ; sans cela on s'arrête.
+
+Ce que Berge veut, c'est démontrer que le parcours obtenu ainsi est bien un cycle eulérien (et peut-être pas écrire un programme informatique).
+
+D'après moi, chaîne ou cycle eulérien :
+---------------------------------------
+
+Je suppose que l'on a une matrice symétrique (sinon la symétriser) avec des 0 ou des 1 (1 pour un 1-graphe, sinon adapter), je suppose aussi qu'on a vérifié que le graphe est connexe, mais en pratique on doit pouvoir s'en passer (cf remarques). 
+On peut prendre en plus un tableau de sommets (pour marquer les sommets) ...
+
+Règle 1. Pour une chaîne, partir de l'un des sommets de degrés impairs a ou b. Pour un cycle, partir de n'importe quel sommet, appelons le a.
+
+Règle 2. Construire une chaîne ou cycle C, aussi longtemps que c'est possible en effaçant dans la matrice, à la fois les deux éléments (x,y) et (y,x) lorsqu'on emprunte une arête entre x et y.
+Marquer les sommets au moment du passage, effacer la marque lorsqu'il n'y a plus d'arête utilisable partant du sommet ou l'on passe.
+
+Règle 3. Tant qu'il reste des arêtes non utilisées, choisir un sommet c marqué, construire suivant la règle 2 un cycle D de c vers c puis insérer D dans C, (à l'emplacement d'un sommet c de C, c existe nécessairement puisque c était marqué)
+Lorsque la règle 3 ne peut plus s'appliquer, la chaîne ou le cycle C trouvé est eulérien.
+
+Remarques : s'il restait des arêtes non utilisées et pas de sommet marqué, c'est que le graphe n'est pas connexe.
+Si le graphe n'est pas connexe et qu'on ne le vérifie pas à l'avance, on s'en rendra compte à un moment ou à un autre.
+
+
+Circuit ou chemin eulérien d'un graphe orienté.
+===============================================
+
+Définitions : 
+-------------
+Un graphe est fortement connexe si pour tout couple (x, y) de deux sommets distincts x et y, il existe un chemin de x vers y et un chemin de y vers x.
+Un sommet x est isolé s'il n'y a pas d'arc d'extrémité x (rentrant ou sortant)
+
+le demi-degré extérieur d+(x) est le nombre d'arcs (x,y) sortants (arc incident à x  vers l'extérieur)
+le demi-degré intérieur d-(x) est le nombre d'arcs (y, x) rentrants (arc incident à x  vers l'intérieur)
+le degré du sommet x est d(x)=d+(x)+d-(x)
+Un graphe est pseudo-symétrique si pour tout sommet x, on a l'égalité des  demi-degrés d+(x) = d-(x)
+
+Algorithme
+----------
+On suppose que le graphe est fortement connexe (on ne tient pas compte des sommets isolés). 
+Propriété :
+-----------
+Un graphe fortement connexe sans points isolés possède un circuit eulérien si et seulement si il est  pseudo-symétrique.
+
+Si le graphe est tel que u(x) = d+(x) - d-(x) = 0 partout sauf en deux sommets a et b tels que u(a)=1 et u(b)=-1, il suffit de rajouter un arc de b vers a pour obtenir un graphe pseudo-symétrique et pour pouvoir construire - si le graphe est fortement connexe - un cycle eulérien. En enlevant ensuite l'arc (b,a) de ce circuit eulérien, on obtient un chemin eulérien de a vers b.
+
+Algorithme calqué, en l'aménageant, du cas non-orienté précédent.
+-----------------------------------------------------------------
+
+Règle 1. Partir du sommet a (recherche de chemin) ou d'un sommet quelconque (recherche de circuit).
+Règle 2. Construire un chemin C, aussi longtemps que c'est possible en effaçant dans la matrice, l'élément(x,y) lorsqu'on emprunte un arc de x vers y.
+Marquer les sommets au moment du passage, effacer la marque lorsqu'il n'y a plus d'arc utilisable au sommet de passage x (arrivant en x ou partant du sommet x).
+Règle 3. Tant qu'il reste des arcs non utilisés, choisir un sommet c
+marqué, construire suivant la règle 2 un circuit D de c vers c puis insérer D dans C, en un sommet c de C.
+Lorsque la règle 3 ne peut plus s'appliquer, le chemin ou le circuit C trouvé est.
+
+S'il n'y pas de pépin en route, le graphe (éventuellement complété par b->a ) est fortement connexe et on trouve le circuit. S'il y a un problème et que les arcs ne sont pas tous utilisés, c'est que le graphe (éventuellement complété) n'est pas fortement connexe et donc qu'il n'y a pas de solution.
+
+
