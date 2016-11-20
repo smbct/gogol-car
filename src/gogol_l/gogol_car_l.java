@@ -24,6 +24,10 @@ public class gogol_car_l {
     private ArrayList<successeur> listeSuccesseurs;
     private ArrayList<Integer> degre; // degré sortant de chaque sommet
 
+    public ArrayList<Integer> getDegre() { return this.degre;}
+
+    public int getNbPlace() { return this.nbPlace;}
+
     public void parser(String nom) {
 
         FileReader fr;
@@ -132,28 +136,28 @@ public class gogol_car_l {
     */
     public void ajout_arrete (int deb, int fin) {
         successeur succ = listeSuccesseurs.get(deb);
-        String nomRue;
+        String nomRue = new String();
 
         //recherche du nom de la rue
-        /*while(succ != null) {
-            if () {
+        while(succ != null) {
+            if (succ.get_sommet() == fin) {
                 nomRue = succ.get_nomRue();
                 succ = null;
             } else {
                 succ = succ.suivant();
             }
-        }*/
+        }
 
         //ajout dans les deux sens
-        // succ.ajouter_rue(new successeur(fin, nomRue)); //dans la liste de successeur de deb
-        // listeSuccesseurs.get(fin)ajouter_rue(new successeur(deb, nomRue)); //dans la liste de successeur de fin
+        listeSuccesseurs.get(deb).ajouter_rue(new successeur(fin, nomRue)); //dans la liste de successeur de deb
+        listeSuccesseurs.get(fin).ajouter_rue(new successeur(deb, nomRue)); //dans la liste de successeur de fin
     }
 
     /**
      * création de l'arborescence de la ville
      * @pre le graphe est connexe
      */
-    private arborescence creer_arborescence() {
+    public arborescence creer_arborescence() {
 
         ArrayList<Boolean> visite = new ArrayList<Boolean>(nbPlace);
         for(int numPlace = 1; numPlace <= nbPlace; numPlace ++) {
@@ -195,7 +199,7 @@ public class gogol_car_l {
      * Numérotation des sommets du graphe à partir de l'anti-arborescence de manière récurisive
      * @param arbo l'aborescence utilisée pour numéroter
      */
-    private void numeroter_rec(arborescence arbo) {
+    public void numeroter_rec(arborescence arbo) {
 
         // récupération des indices des sommets : le sommet courant et sont successeur dans l'anti-arborescence
         int sommet = arbo.get_sommet();
@@ -243,7 +247,7 @@ public class gogol_car_l {
      * @param numeros la numérotation du graphe
      * @param racine la racine de l'arborescence
      */
-    private void cycle_gogol(int racine) {
+    public void cycle_gogol(int racine) {
 
         boolean continuer = Boolean.TRUE;
 
@@ -288,6 +292,33 @@ public class gogol_car_l {
         }
         System.out.println("");
 
+    }
+
+    /**
+    * transforme la representation en liste d'adjacence en une matrice d'adjacence
+    * @param matriceAdjacence la matrice qui contien les distances entre les sommets
+    * @param succecesseurs indique les sommet a parcourir pour aller de sommet en sommet
+    **/
+    public void transformeMatrice(int matriceAdjacence [][], int succecesseurs[][]) {
+        //initialisation
+        for(int i = 0; i<nbPlace; i++) {
+            for(int j = 0; j<nbPlace; j++) {
+                matriceAdjacence[i][j] = Integer.MAX_VALUE; //par defaut aucune arrete
+                succecesseurs[i][j] = -1;
+            }
+            matriceAdjacence[i][i] = 0; //un sommet n'est pas distant de lui meme
+        }
+
+        //ajout de arretes
+        successeur parcrec;
+        for(int parc = 0; parc<nbPlace; ++parc) {
+            parcrec = listeSuccesseurs.get(parc);
+            while(parcrec != null) {
+                matriceAdjacence[parc][parcrec.get_sommet()] = 1; //il y a une arrete
+                succecesseurs[parc][parcrec.get_sommet()] = parc;
+                parcrec = parcrec.suivant();
+            }
+        }
     }
 
     /**

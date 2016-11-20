@@ -29,9 +29,50 @@ public class gogol_car_xl {
     }
 
     /**
-    * double judicieusement des arretes pour que le graphe possede un graphe eulerien
+    * double judicieusement des arretes pour que le graphe possede un circuit eulerien
     */
     public void rendreEulerien() {
+        ArrayList<Integer> sommetImpair = new ArrayList<Integer>();
+
+        //recherche des sommet de degre impair
+        for(Integer parc : car_l.getDegre() ) {
+            if (parc % 2 != 0) {
+                sommetImpair.add(parc);
+            }
+        }
+
+        //calcul des distances entre tous les sommets
+        int matriceAdjacence [][] = new int[car_l.getNbPlace()][car_l.getNbPlace()];
+        int succecesseurs [][] = new int[car_l.getNbPlace()][car_l.getNbPlace()];
+        //remplissage initila des matrices
+        car_l.transformeMatrice(matriceAdjacence, succecesseurs);
+        //floy-warshall avec memorisation des chemin
+        for(int k=0; k<car_l.getNbPlace(); k++) {
+            for(int i=0; i<car_l.getNbPlace(); i++) {
+                for(int j=0; j<car_l.getNbPlace(); j++) {
+                    if (matriceAdjacence[i][k] + matriceAdjacence[k][j] < matriceAdjacence[i][j]) {
+                        matriceAdjacence[i][j] = matriceAdjacence[i][k] + matriceAdjacence[k][j];
+                        succecesseurs[i][j] = k; //on doit passer par k pour avoir le plus cour chemin
+                    }
+                }
+            }
+        }
+
+        //recherche du couplage de poid minimal (non exact) de sommetImpair selon les distances de matriceAdjacence
+        ArrayList<couple> couplage = new ArrayList<couple>();
+
+        //doublage des arretes le long des chemin du couplage
+        int parcrec, precrec;
+        for(couple parc : couplage) {
+            parcrec = parc.premier;
+            while (parcrec != succecesseurs[parcrec][parc.deuxieme]) {
+                precrec = parcrec;
+                parcrec = succecesseurs[parcrec][parc.deuxieme];
+                car_l.ajout_arrete (precrec, parcrec);    
+            }
+            car_l.ajout_arrete (parcrec, parc.deuxieme);
+        }
+
 
     }
 
@@ -47,11 +88,11 @@ public class gogol_car_xl {
 
         car.rendreEulerien();
 
-        arborescence arbo = car.creer_arborescence();
+        arborescence arbo = car.car_l.creer_arborescence();
 
-        car.numeroter_rec(arbo);
+        car.car_l.numeroter_rec(arbo);
 
-        car.cycle_gogol(arbo.get_sommet());
+        car.car_l.cycle_gogol(arbo.get_sommet());
 
     }
 
