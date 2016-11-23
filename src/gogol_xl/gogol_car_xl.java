@@ -40,21 +40,20 @@ public class gogol_car_xl {
             utilise.add(Boolean.FALSE);
         }
 
-
         while(nbCouple != 0) {
 
             // recherche de deux sommets non utilisés qui sont reliés par le plus court chemin
             int distMin = -1;
             Integer sommetMin1 = null, sommetMin2 = null;
-            for(Integer sommet1 : sommetsImpairs) {
-                for(Integer sommet2 : sommetsImpairs) {
+            for(int ind1 = 0; ind1 < sommetsImpairs.size(); ind1++) {
+                for(int ind2 = 0; ind2 < sommetsImpairs.size(); ind2++) {
 
                     // un couple peut être former par ces deux sommets
-                    if(!utilise.get(sommet1) && ! utilise.get(sommet2)) {
-                        if(distMin == -1 || distances[sommet1][sommet2] < distMin) {
-                            distMin = distances[sommet1][sommet2];
-                            sommetMin1 = sommet1;
-                            sommetMin2 = sommet2;
+                    if(ind1 != ind2 && !utilise.get(ind1) && !utilise.get(ind2)) {
+                        if(distMin == -1 || distances[sommetsImpairs.get(ind1)][sommetsImpairs.get(ind2)] < distMin) {
+                            distMin = distances[sommetsImpairs.get(ind1)][sommetsImpairs.get(ind2)];
+                            sommetMin1 = ind1;
+                            sommetMin2 = ind2;
                         }
                     }
                 }
@@ -64,12 +63,10 @@ public class gogol_car_xl {
             utilise.set(sommetMin1, Boolean.TRUE);
             utilise.set(sommetMin2, Boolean.TRUE);
 
-            couplage.add(new couple(sommetMin1, sommetMin1));
+            couplage.add(new couple(sommetsImpairs.get(sommetMin1), sommetsImpairs.get(sommetMin2)));
 
             nbCouple --;
         }
-
-
 
     }
 
@@ -89,16 +86,16 @@ public class gogol_car_xl {
 
         //calcul des distances entre tous les sommets
         int matriceAdjacence [][] = new int[car_l.getNbPlace()][car_l.getNbPlace()];
-        int succecesseurs [][] = new int[car_l.getNbPlace()][car_l.getNbPlace()];
+        int successeurs [][] = new int[car_l.getNbPlace()][car_l.getNbPlace()];
         //remplissage initila des matrices
-        car_l.transformeMatrice(matriceAdjacence, succecesseurs);
+        car_l.transformeMatrice(matriceAdjacence, successeurs);
         //floy-warshall avec memorisation des chemin
         for(int k=0; k<car_l.getNbPlace(); k++) {
             for(int i=0; i<car_l.getNbPlace(); i++) {
                 for(int j=0; j<car_l.getNbPlace(); j++) {
                     if (matriceAdjacence[i][k] + matriceAdjacence[k][j] < matriceAdjacence[i][j]) {
                         matriceAdjacence[i][j] = matriceAdjacence[i][k] + matriceAdjacence[k][j];
-                        succecesseurs[i][j] = k; //on doit passer par k pour avoir le plus cour chemin
+                        successeurs[i][j] = k; //on doit passer par k pour avoir le plus cour chemin
                     }
                 }
             }
@@ -109,20 +106,23 @@ public class gogol_car_xl {
 
         // créer les couples
         couplerGraphe(sommetImpair, matriceAdjacence, couplage);
+        System.out.println(couplage);
 
-        ameliore(couplage, matriceAdjacence);
+        // ameliore(couplage, matriceAdjacence);
 
         //doublage des arretes le long des chemin du couplage
         int parcrec, precrec;
         for(couple parc : couplage) {
             parcrec = parc.premier;
-            while (parcrec != succecesseurs[parcrec][parc.deuxieme]) {
+            while (parcrec != successeurs[parcrec][parc.deuxieme]) {
                 precrec = parcrec;
-                parcrec = succecesseurs[parcrec][parc.deuxieme];
+                parcrec = successeurs[parcrec][parc.deuxieme];
                 car_l.ajout_arrete (precrec, parcrec);
             }
             car_l.ajout_arrete (parcrec, parc.deuxieme);
         }
+
+        System.out.println("graphe : "+car_l);
     }
 
 
@@ -163,7 +163,7 @@ public class gogol_car_xl {
     public static void main(String[] args) {
 
         gogol_car_xl car = new gogol_car_xl();
-        car.parser("../instances/test.txt");
+        car.parser("../instances/NantesPasEuler.txt");
 
         System.out.println(car);
 

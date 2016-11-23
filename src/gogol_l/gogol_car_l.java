@@ -75,13 +75,13 @@ public class gogol_car_l {
                 String nomRue = noms[0].substring(0, noms[0].length()-1);
 
                 // création de la liste d'adjacence
-                successeur suc = new successeur(num2, nomRue);
+                successeur suc = new successeur(num2, places.get(num2), nomRue);
                 if(listeSuccesseurs.get(num1) == null) {
                     listeSuccesseurs.set(num1, suc);
                 } else {
                     listeSuccesseurs.get(num1).ajouter_rue(suc);
                 }
-                suc = new successeur(num1, nomRue);
+                suc = new successeur(num1, places.get(num1), nomRue);
                 if(listeSuccesseurs.get(num2) == null) {
                     listeSuccesseurs.set(num2, suc);
                 } else {
@@ -118,7 +118,7 @@ public class gogol_car_l {
         String str = "";
 
         for(int i = 0; i < nbPlace; i++) {
-            str += i + "  : ";
+            str += places.get(i) + "  : ";
             if(listeSuccesseurs.get(i) != null) {
                 str += listeSuccesseurs.get(i);
             }
@@ -149,8 +149,9 @@ public class gogol_car_l {
         }
 
         //ajout dans les deux sens
-        listeSuccesseurs.get(deb).ajouter_rue(new successeur(fin, nomRue)); //dans la liste de successeur de deb
-        listeSuccesseurs.get(fin).ajouter_rue(new successeur(deb, nomRue)); //dans la liste de successeur de fin
+        System.out.println("deb et fin : "+deb+" "+fin);
+        listeSuccesseurs.get(deb).ajouter_rue(new successeur(fin, places.get(fin), nomRue)); //dans la liste de successeur de deb
+        listeSuccesseurs.get(fin).ajouter_rue(new successeur(deb, places.get(deb), nomRue)); //dans la liste de successeur de fin
     }
 
     /**
@@ -327,7 +328,7 @@ public class gogol_car_l {
     public static void main(String[] args) {
 
         gogol_car_l car = new gogol_car_l();
-        car.parser(/*"../instances/euler_city.txt"*/"../instances/antCity.txt");
+        car.parser(/*"../instances/euler_city.txt"*/"../instances/test.txt");
 
         System.out.println(car);
 

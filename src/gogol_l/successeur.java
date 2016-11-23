@@ -6,6 +6,7 @@ public class successeur {
 
     int sommet; // numéro de la place
     int numero; // numéro associé à l'arête
+    String nomPlace; // nom de la place
     successeur suivant; // rue suivante
     Boolean visite; // indique si la rue menant à ce sommet a été parcourue ou non
     String nomRue; // nom de la rue
@@ -15,12 +16,13 @@ public class successeur {
      * @param sommet le numéro du sommet
      * @param nomRue le nom de la rue menant à ce sommet
      */
-    public successeur(int sommet, String nomRue) {
+    public successeur(int sommet, String nomPlace, String nomRue) {
         suivant = null;
         this.sommet = sommet;
         this.nomRue = nomRue;
         this.numero = -1;
         this.visite = Boolean.FALSE;
+        this.nomPlace = nomPlace;
     }
 
     /**
@@ -118,7 +120,7 @@ public class successeur {
      * @return la chaîne de caractère formatée
      */
     public String toString() {
-        String res = nomRue + " -> " + sommet;
+        String res = nomRue + " -> " + nomPlace;
         if(suivant != null) {
             res += " ; " + suivant.toString();
         }
