@@ -78,8 +78,8 @@ public class gogol_car_xl {
         ArrayList<Integer> sommetImpair = new ArrayList<Integer>();
 
         //recherche des sommet de degre impair
-        for(Integer parc : car_l.getDegre() ) {
-            if (parc % 2 != 0) {
+        for(int parc = 0; parc<car_l.getNbPlace(); parc++) {
+            if ( car_l.getDegre(parc) % 2 != 0) {
                 sommetImpair.add(parc);
             }
         }

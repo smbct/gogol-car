@@ -24,7 +24,10 @@ public class gogol_car_l {
     private ArrayList<successeur> listeSuccesseurs;
     private ArrayList<Integer> degre; // degré sortant de chaque sommet
 
-    public ArrayList<Integer> getDegre() { return this.degre;}
+    /**
+    * retourne le degre du sommet corespondant a la ligne i
+    */
+    public Integer getDegre(int i) { return this.degre.get(i);}
 
     public int getNbPlace() { return this.nbPlace;}
 
@@ -149,7 +152,7 @@ public class gogol_car_l {
         }
 
         //ajout dans les deux sens
-        System.out.println("deb et fin : "+deb+" "+fin);
+        System.out.println("deb et fin ("+deb+" ; "+fin+") : "+places.get(deb)+" "+places.get(fin));
         listeSuccesseurs.get(deb).ajouter_rue(new successeur(fin, places.get(fin), nomRue)); //dans la liste de successeur de deb
         listeSuccesseurs.get(fin).ajouter_rue(new successeur(deb, places.get(deb), nomRue)); //dans la liste de successeur de fin
     }
