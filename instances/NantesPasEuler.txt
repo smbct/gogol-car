@@ -20,4 +20,4 @@ Cours des 50 Otages ;Place du Cirque ;Place du Commerce.
 Rue de Strasbourg ;Place du Commerce ;Place du Maréchal-Foch.
 Allée du port ;Place du Commerce ;Place du Chateau.
 Cours Saint-Andre ;Place du Chateau ;Place du Maréchal-Foch.
-Rue de la Marne ;Place du Chateau ;Place Royale.
+Rue de la Morne ;Place du Chateau ;Place Royale.
