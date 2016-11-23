@@ -29,9 +29,55 @@ public class gogol_car_xl {
     }
 
     /**
+     * création de couples de sommets impairs de façon à obtenir une distance assez petite
+     */
+    public void couplerGraphe(ArrayList<Integer> sommetsImpairs, int distances[][], ArrayList<couple> couplage) {
+
+        int nbCouple = sommetsImpairs.size()/2;
+
+        ArrayList<Boolean> utilise = new ArrayList<Boolean>(sommetsImpairs.size());
+        for(int i = 0; i < sommetsImpairs.size(); i++) {
+            utilise.add(Boolean.FALSE);
+        }
+
+
+        while(nbCouple != 0) {
+
+            // recherche de deux sommets non utilisés qui sont reliés par le plus court chemin
+            int distMin = -1;
+            Integer sommetMin1 = null, sommetMin2 = null;
+            for(Integer sommet1 : sommetsImpairs) {
+                for(Integer sommet2 : sommetsImpairs) {
+
+                    // un couple peut être former par ces deux sommets
+                    if(!utilise.get(sommet1) && ! utilise.get(sommet2)) {
+                        if(distMin == -1 || distances[sommet1][sommet2] < distMin) {
+                            distMin = distances[sommet1][sommet2];
+                            sommetMin1 = sommet1;
+                            sommetMin2 = sommet2;
+                        }
+                    }
+                }
+            }
+
+            // ces deux sommets sont désormais utilisés
+            utilise.set(sommetMin1, Boolean.TRUE);
+            utilise.set(sommetMin2, Boolean.TRUE);
+
+            couplage.add(new couple(sommetMin1, sommetMin1));
+
+            nbCouple --;
+        }
+
+
+
+    }
+
+    /**
     * double judicieusement des arretes pour que le graphe possede un circuit eulerien
     */
     public void rendreEulerien() {
+
         ArrayList<Integer> sommetImpair = new ArrayList<Integer>();
 
         //recherche des sommet de degre impair
@@ -61,6 +107,9 @@ public class gogol_car_xl {
         //recherche du couplage de poid minimal (non exact) de sommetImpair selon les distances de matriceAdjacence
         ArrayList<couple> couplage = new ArrayList<couple>();
 
+        // créer les couples
+        couplerGraphe(sommetImpair, matriceAdjacence, couplage);
+
         //doublage des arretes le long des chemin du couplage
         int parcrec, precrec;
         for(couple parc : couplage) {
@@ -68,11 +117,10 @@ public class gogol_car_xl {
             while (parcrec != succecesseurs[parcrec][parc.deuxieme]) {
                 precrec = parcrec;
                 parcrec = succecesseurs[parcrec][parc.deuxieme];
-                car_l.ajout_arrete (precrec, parcrec);    
+                car_l.ajout_arrete (precrec, parcrec);
             }
             car_l.ajout_arrete (parcrec, parc.deuxieme);
         }
-
 
     }
 
