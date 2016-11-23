@@ -107,12 +107,10 @@ public class gogol_car_xl {
         //recherche du couplage de poid minimal (non exact) de sommetImpair selon les distances de matriceAdjacence
         ArrayList<couple> couplage = new ArrayList<couple>();
 
-<<<<<<< HEAD
         // créer les couples
         couplerGraphe(sommetImpair, matriceAdjacence, couplage);
-=======
+
         ameliore(couplage, matriceAdjacence);
->>>>>>> f62e43be466c8febc3c8277d70e900987bf07136
 
         //doublage des arretes le long des chemin du couplage
         int parcrec, precrec;
@@ -127,8 +125,7 @@ public class gogol_car_xl {
         }
     }
 
-<<<<<<< HEAD
-=======
+
     /**
     * ameliore de manière heuristique le couplage
     * utilise en descente un operateur qui teste pour toute paire de couple {(i,j),(k,l)} les couples {(i,l),(k,j)} et {(i,k),(j,l)}
@@ -158,7 +155,6 @@ public class gogol_car_xl {
                 }
             }
         }
->>>>>>> f62e43be466c8febc3c8277d70e900987bf07136
     }
 
     /**
