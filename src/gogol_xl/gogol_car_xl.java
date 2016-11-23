@@ -61,6 +61,8 @@ public class gogol_car_xl {
         //recherche du couplage de poid minimal (non exact) de sommetImpair selon les distances de matriceAdjacence
         ArrayList<couple> couplage = new ArrayList<couple>();
 
+        ameliore(couplage, matriceAdjacence);
+
         //doublage des arretes le long des chemin du couplage
         int parcrec, precrec;
         for(couple parc : couplage) {
@@ -72,8 +74,37 @@ public class gogol_car_xl {
             }
             car_l.ajout_arrete (parcrec, parc.deuxieme);
         }
+    }
 
-
+    /**
+    * ameliore de manière heuristique le couplage
+    * utilise en descente un operateur qui teste pour toute paire de couple {(i,j),(k,l)} les couples {(i,l),(k,j)} et {(i,k),(j,l)}
+    */
+    private void ameliore(ArrayList<couple> couplage, int matriceAdjacence [][]) {
+        int tmp;
+        boolean improved = true;
+        while (improved) {
+            improved = false;
+            for (int i = 0; i<couplage.size(); i++) { //pour tout les couples
+                for(int j = 0; j<couplage.size(); j++) { //on essaye de croiser avec toutes les autres couples
+                    if ( (matriceAdjacence[couplage.get(i).premier][couplage.get(i).deuxieme] + matriceAdjacence[couplage.get(j).premier][couplage.get(j).deuxieme]) >
+                        (matriceAdjacence[couplage.get(i).premier][couplage.get(j).deuxieme] + matriceAdjacence[couplage.get(j).premier][couplage.get(i).deuxieme]) ) {
+                        //le croisement est efficace
+                        tmp = couplage.get(i).deuxieme;
+                        couplage.get(i).deuxieme = couplage.get(j).deuxieme;
+                        couplage.get(j).deuxieme = tmp;
+                        improved = true;
+                    } else if ( (matriceAdjacence[couplage.get(i).premier][couplage.get(i).deuxieme] + matriceAdjacence[couplage.get(j).premier][couplage.get(j).deuxieme]) >
+                        (matriceAdjacence[couplage.get(i).premier][couplage.get(j).premier] + matriceAdjacence[couplage.get(i).deuxieme][couplage.get(j).deuxieme]) ) {
+                        //l'autre croisement est eficace
+                        tmp = couplage.get(i).deuxieme;
+                        couplage.get(i).deuxieme = couplage.get(j).premier;
+                        couplage.get(j).premier = tmp;
+                        improved = true;
+                    }
+                }
+            }
+        }
     }
 
     /**
