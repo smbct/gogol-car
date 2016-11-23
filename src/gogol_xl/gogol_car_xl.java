@@ -168,13 +168,15 @@ public class gogol_car_xl {
         gogol_car_xl car = new gogol_car_xl();
         car.parser("../instances/NantesPasEuler.txt");
 
-        System.out.println(car);
+
 
         car.rendreEulerien();
 
         arborescence arbo = car.car_l.creer_arborescence();
 
         car.car_l.numeroter_rec(arbo);
+
+        System.out.println(car);
 
         car.car_l.cycle_gogol(arbo.get_sommet());
 

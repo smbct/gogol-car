@@ -120,7 +120,11 @@ public class successeur {
      * @return la chaîne de caractère formatée
      */
     public String toString() {
+<<<<<<< HEAD
         String res = nomRue +" -> " + nomPlace;
+=======
+        String res = nomRue + " ; " + numero + " -> " + nomPlace;
+>>>>>>> d21914afb3d848c82a6be7bae07be41a60e364f4
         if(suivant != null) {
             res += " ; " + suivant.toString();
         }

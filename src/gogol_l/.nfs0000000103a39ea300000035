@@ -155,9 +155,6 @@ public class gogol_car_l {
         System.out.println("deb et fin ("+deb+" ; "+fin+") : "+places.get(deb)+" "+places.get(fin));
         listeSuccesseurs.get(deb).ajouter_rue(new successeur(fin, places.get(fin), nomRue)); //dans la liste de successeur de deb
         listeSuccesseurs.get(fin).ajouter_rue(new successeur(deb, places.get(deb), nomRue)); //dans la liste de successeur de fin
-
-        degre.set(deb, degre.get(deb)+1);
-        degre.set(fin, degre.get(fin)+1);
     }
 
     /**
