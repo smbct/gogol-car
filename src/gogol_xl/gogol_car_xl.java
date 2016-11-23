@@ -106,9 +106,10 @@ public class gogol_car_xl {
 
         // créer les couples
         couplerGraphe(sommetImpair, matriceAdjacence, couplage);
+
         System.out.println(couplage);
 
-        // ameliore(couplage, matriceAdjacence);
+        ameliore(couplage, matriceAdjacence);
 
         //doublage des arretes le long des chemin du couplage
         int parcrec, precrec;
@@ -137,20 +138,22 @@ public class gogol_car_xl {
             improved = false;
             for (int i = 0; i<couplage.size(); i++) { //pour tout les couples
                 for(int j = 0; j<couplage.size(); j++) { //on essaye de croiser avec toutes les autres couples
-                    if ( (matriceAdjacence[couplage.get(i).premier][couplage.get(i).deuxieme] + matriceAdjacence[couplage.get(j).premier][couplage.get(j).deuxieme]) >
-                        (matriceAdjacence[couplage.get(i).premier][couplage.get(j).deuxieme] + matriceAdjacence[couplage.get(j).premier][couplage.get(i).deuxieme]) ) {
-                        //le croisement est efficace
-                        tmp = couplage.get(i).deuxieme;
-                        couplage.get(i).deuxieme = couplage.get(j).deuxieme;
-                        couplage.get(j).deuxieme = tmp;
-                        improved = true;
-                    } else if ( (matriceAdjacence[couplage.get(i).premier][couplage.get(i).deuxieme] + matriceAdjacence[couplage.get(j).premier][couplage.get(j).deuxieme]) >
-                        (matriceAdjacence[couplage.get(i).premier][couplage.get(j).premier] + matriceAdjacence[couplage.get(i).deuxieme][couplage.get(j).deuxieme]) ) {
-                        //l'autre croisement est eficace
-                        tmp = couplage.get(i).deuxieme;
-                        couplage.get(i).deuxieme = couplage.get(j).premier;
-                        couplage.get(j).premier = tmp;
-                        improved = true;
+                    if (i != j) {
+                        if ( (matriceAdjacence[couplage.get(i).premier][couplage.get(i).deuxieme] + matriceAdjacence[couplage.get(j).premier][couplage.get(j).deuxieme]) >
+                            (matriceAdjacence[couplage.get(i).premier][couplage.get(j).deuxieme] + matriceAdjacence[couplage.get(j).premier][couplage.get(i).deuxieme]) ) {
+                            //le croisement est efficace
+                            tmp = couplage.get(i).deuxieme;
+                            couplage.get(i).deuxieme = couplage.get(j).deuxieme;
+                            couplage.get(j).deuxieme = tmp;
+                            improved = true;
+                        } else if ( (matriceAdjacence[couplage.get(i).premier][couplage.get(i).deuxieme] + matriceAdjacence[couplage.get(j).premier][couplage.get(j).deuxieme]) >
+                            (matriceAdjacence[couplage.get(i).premier][couplage.get(j).premier] + matriceAdjacence[couplage.get(i).deuxieme][couplage.get(j).deuxieme]) ) {                        
+                            //l'autre croisement est eficace
+                            tmp = couplage.get(i).deuxieme;
+                            couplage.get(i).deuxieme = couplage.get(j).premier;
+                            couplage.get(j).premier = tmp;
+                            improved = true;
+                        }
                     }
                 }
             }
