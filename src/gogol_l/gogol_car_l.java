@@ -329,6 +329,19 @@ public class gogol_car_l {
     }
 
     /**
+    * calcule si le graphe contien un cycle eulerien
+    */
+    public boolean estEuler() {
+        boolean res = true;
+        int parc = 0
+        while (res && (parc<this.getNbPlace())) {
+            res = res && (this.getDegre(parc) % 2 != 0)
+            parc++;
+        }
+        return res;
+    }
+
+    /**
      * fonction de test de la classe
      */
     public static void main(String[] args) {
