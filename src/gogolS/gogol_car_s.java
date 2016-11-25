@@ -101,6 +101,14 @@ public class gogol_car_s {
         System.out.println(this);
 
         System.out.print("\nItineraire à suivre :\n");
-        System.out.println(this.parcours());
+        String res = this.parcours();
+        System.out.println(res);
+        try{
+            PrintWriter writer = new PrintWriter("itineraire.txt", "UTF-8");
+            writer.println(res);
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("Erreur pendant l'ecriture de l'itineraire dans un fichier");
+        }
     }
 }
