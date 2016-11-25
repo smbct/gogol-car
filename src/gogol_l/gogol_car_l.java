@@ -311,7 +311,7 @@ public class gogol_car_l {
             writer.print("Itineraire à suivre : ");
             System.out.print("Itineraire à suivre : ");
             for(int sommet : chemin) {
-                writer.(places.get(sommet) + ", ");
+                writer.print(places.get(sommet) + ", ");
                 System.out.print(places.get(sommet) + ", ");
             }
             writer.println("");

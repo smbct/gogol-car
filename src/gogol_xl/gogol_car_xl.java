@@ -50,6 +50,7 @@ public class gogol_car_xl {
 
                     // un couple peut être former par ces deux sommets
                     if(ind1 != ind2 && !utilise.get(ind1) && !utilise.get(ind2)) {
+                        // si la distance actuelle est plus petite que la meilleure trouvée, la distance minimale est mise à jour
                         if(distMin == -1 || distances[sommetsImpairs.get(ind1)][sommetsImpairs.get(ind2)] < distMin) {
                             distMin = distances[sommetsImpairs.get(ind1)][sommetsImpairs.get(ind2)];
                             sommetMin1 = ind1;
@@ -154,7 +155,7 @@ public class gogol_car_xl {
                             couplage.get(j).deuxieme = tmp;
                             improved = true;
                         } else if ( (matriceAdjacence[couplage.get(i).premier][couplage.get(i).deuxieme] + matriceAdjacence[couplage.get(j).premier][couplage.get(j).deuxieme]) >
-                            (matriceAdjacence[couplage.get(i).premier][couplage.get(j).premier] + matriceAdjacence[couplage.get(i).deuxieme][couplage.get(j).deuxieme]) ) {                        
+                            (matriceAdjacence[couplage.get(i).premier][couplage.get(j).premier] + matriceAdjacence[couplage.get(i).deuxieme][couplage.get(j).deuxieme]) ) {
                             //l'autre croisement est eficace
                             tmp = couplage.get(i).deuxieme;
                             couplage.get(i).deuxieme = couplage.get(j).premier;

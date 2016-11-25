@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.lang.Integer;
 import java.util.TreeSet;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
 * classe qui implement l'algorithme gogolS
@@ -14,14 +15,30 @@ public class gogol_car_s {
 	private listeSuccesseur racine; //noeud qui nous sert de point d'entre dans le graphe
 
     /**
+<<<<<<< HEAD
     * lit le fichier d'intance passe en parametre pour preparer le graph qui nous permet de resoudre le probleme
     * <p>
     * Le graphe construit a pour sommet les rues et pour arrete les places, deux rue sont relié si elles sont une extremité (places) en commun
     *
     * @param fichier le chemin du fichier qui contien l'instance selon le formatage decrit
+=======
+    * constructeur par défaut
+>>>>>>> c136eca739d5aff35310975db09d1d40256a715c
     */
-	public gogol_car_s(String fichier) {
-        FileReader fr;
+	public gogol_car_s() {
+
+    }
+
+	/**
+	 * lecture et chargement en mémoire du graphe à traiter
+	 * @param fichier le nom du fichier
+	 * @return 1 ssi la lecture s'est bien déroulée
+	 */
+	private boolean parser(String fichier) {
+
+		boolean res = true;
+
+		FileReader fr;
         try {
             //objets de lecture
             fr = new FileReader(fichier);
@@ -62,9 +79,12 @@ public class gogol_car_s {
             }
             this.racine = parc;
         } catch(IOException ex) {
-            System.out.println("erreur a l'ouvertue du ficher");
+            System.out.println("erreur a l'ouverture du ficher");
+			res = false;
         }
-    }
+
+		return res;
+	}
 
     @Override
     /**
@@ -99,21 +119,29 @@ public class gogol_car_s {
     }
 
     /**
-     * fonction qui gere toute la gogol_s
+     * fonction de calcul de l'itinéraire pour gogol_s
+	 * @param fichier le nom du fichier contenant la ville
      */
     public void calculItineraire(String fichier) {
-        System.out.println("Graphe de la ville : ");
-        System.out.println(this);
 
-        System.out.print("\nItineraire à suivre :\n");
-        String res = this.parcours();
-        System.out.println(res);
-        try{
-            PrintWriter writer = new PrintWriter("itineraire.txt", "UTF-8");
-            writer.println(res);
-            writer.close();
-        } catch (Exception e) {
-            System.out.println("Erreur pendant l'ecriture de l'itineraire dans un fichier");
-        }
+		if(parser(fichier)) {
+
+			System.out.println("Graphe de la ville : ");
+			System.out.println(this);
+
+			System.out.print("\nItineraire à suivre :\n");
+			String res = this.parcours();
+			System.out.println(res);
+			try{
+				PrintWriter writer = new PrintWriter("itineraire.txt", "UTF-8");
+				writer.println(res);
+				writer.close();
+			} catch (Exception e) {
+				System.out.println("Erreur pendant l'ecriture de l'itineraire dans un fichier");
+			}
+
+		}
+
+
     }
 }
