@@ -17,30 +17,33 @@ import java.io.PrintWriter;
  */
 public class gogol_car_l {
 
-    private ArrayList<String> places;
-    // dictionnaire association chaque ville à son numéro de sommet dans le graphe
-    private Hashtable<String, Integer> numeroPlaces;
-    private int nbPlace;
-    private int nbRue;
+    private ArrayList<String> places; // liste des places de la ville
+    private Hashtable<String, Integer> numeroPlaces; // liste associant les numéros dex places à leur noms
+    private int nbPlace; // nombre de place de la ville
+    private int nbRue; // nombre de rue de la ville
 
-    private ArrayList<successeur> listeSuccesseurs;
+    private ArrayList<successeur> listeSuccesseurs; // liste des successeurs du graphe
     private ArrayList<Integer> degre; // degré sortant de chaque sommet
 
     /**
-    * @brief retourne le degre du sommet corespondant a la ligne i
+    * retourne le degre du sommet corespondant a la ligne i
     */
     public Integer getDegre(int i) { return this.degre.get(i);}
 
     /**
-    * @brief retourne le nombdre de place de la ville
+    * retourne le nombre de place de la ville
     */
     public int getNbPlace() { return this.nbPlace;}
 
     /**
-    * @brief donne le nom de la place i
+    * donne le nom de la place i
     */
     public String getNomPlace(int i) {return places.get(i);}
 
+    /**
+     * chargement en mémoire de la ville
+     * @param nom le nom du fichier contenant la ville
+     */
     public boolean parser(String nom) {
 
         FileReader fr;
@@ -59,7 +62,8 @@ public class gogol_car_l {
             for(int i = 0; i < nbPlace; i ++) {
                 listeSuccesseurs.add(null);
             }
-            // création de la liste des degrés sortant
+
+            // création de la liste des degrés sortant mémorisant le degré sortant de chaque sommet
             degre = new ArrayList<Integer>(nbPlace);
             for(int i = 0; i < nbPlace; i++) {
                 degre.add(0);
@@ -89,6 +93,7 @@ public class gogol_car_l {
 
                 // création de la liste d'adjacence
                 successeur suc = new successeur(num2, places.get(num2), nomRue);
+                // si la liste des sucesseurs était vide, le premier élément est initialisé
                 if(listeSuccesseurs.get(num1) == null) {
                     listeSuccesseurs.set(num1, suc);
                 } else {
@@ -120,6 +125,7 @@ public class gogol_car_l {
      */
     public gogol_car_l() {
 
+        // création de la liste associative entre les numéros des places et leur noms
         numeroPlaces = new Hashtable<String, Integer>();
 
         // création de la liste des places
@@ -127,10 +133,15 @@ public class gogol_car_l {
 
     }
 
+    /**
+     * retourne l'information du graphe sous forme de chaîne de caractère
+     * @return la chaîne de caractère
+     */
     public String toString() {
 
         String str = "";
 
+        // pour chaque place, affichage des rues et des places vers lesquelles elles conduisent
         for(int i = 0; i < nbPlace; i++) {
             str += places.get(i) + "  : ";
             if(listeSuccesseurs.get(i) != null) {
@@ -143,10 +154,10 @@ public class gogol_car_l {
     }
 
     /**
-    * pour gogol_xl, sert à doubler des arretes
-    * @param deb la premiere extremite de l'arrete
-    * @param fin la seconde extremite de l'arrete
-    * @pre cette arrete existe deja
+    * pour gogol_xl, sert à doubler des aretes
+    * @param deb la premiere extremite de l'arete
+    * @param fin la seconde extremite de l'arete
+    * @pre cette arete existe deja
     */
     public void ajout_arrete (int deb, int fin) {
         successeur succ = listeSuccesseurs.get(deb);
@@ -176,11 +187,13 @@ public class gogol_car_l {
      */
     public arborescence creer_arborescence() {
 
+        // création d'une liste indiquant quels sommets ont été visités durant le parcours
         ArrayList<Boolean> visite = new ArrayList<Boolean>(nbPlace);
         for(int numPlace = 1; numPlace <= nbPlace; numPlace ++) {
             visite.add(Boolean.FALSE);
         }
 
+        // création de l'arborescence de manière récursive
         arborescence res = creer_arborescence_rec(0, visite);
 
         return res;
@@ -193,12 +206,13 @@ public class gogol_car_l {
      */
     private arborescence creer_arborescence_rec(int sommet, ArrayList<Boolean> visite) {
 
+        // création d'un nouveau sommet qui sera ajouté à l'arborescence
         arborescence arbo = new arborescence(sommet);
 
         // marquer ce sommet comme étant visité
         visite.set(sommet, Boolean.TRUE);
 
-        // parcours de tous les successeurs et ajout à l'arborescence des non visités
+        // parcours de tous les successeurs du sommet et ajout des successeurs non visités à l'arborescence
         successeur succ = listeSuccesseurs.get(sommet);
         while(succ != null) {
 
@@ -206,6 +220,7 @@ public class gogol_car_l {
             if(!visite.get(succ.get_sommet())) {
                 arbo.ajouterFils(creer_arborescence_rec(succ.get_sommet(), visite));
             }
+            // avancement vers le prochain successeur
             succ = succ.suivant();
         }
 
@@ -222,6 +237,7 @@ public class gogol_car_l {
         int sommet = arbo.get_sommet();
         int sommetPere = -1;
         // le successeur correspond au père dans l'arborescence créée
+        // si le sommet est la racine de l'arborescence, alors l'indice du père est laissée à -1
         if(arbo.get_pere() != null) {
             sommetPere = arbo.get_pere().get_sommet();
         }
@@ -343,12 +359,12 @@ public class gogol_car_l {
             matriceAdjacence[i][i] = 0; //un sommet n'est pas distant de lui meme
         }
 
-        //ajout de arretes
+        //ajout de aretes
         successeur parcrec;
         for(int parc = 0; parc<nbPlace; ++parc) {
             parcrec = listeSuccesseurs.get(parc);
             while(parcrec != null) {
-                matriceAdjacence[parc][parcrec.get_sommet()] = 1; //il y a une arrete
+                matriceAdjacence[parc][parcrec.get_sommet()] = 1; //il y a une arete
                 succecesseurs[parc][parcrec.get_sommet()] = parc;
                 parcrec = parcrec.suivant();
             }
@@ -356,7 +372,7 @@ public class gogol_car_l {
     }
 
     /**
-    * calcule si le graphe contien un cycle eulerien
+    * calcule si le graphe contient un cycle eulerien
     */
     public boolean estEuler() {
         boolean res = true;
@@ -383,7 +399,7 @@ public class gogol_car_l {
 
                 this.cycle_gogol(arbo.get_sommet());
             } else {
-                System.out.println("Impossible d'utiliser gogol_l car le graphe ne contien pas de circuit eulerien");
+                System.out.println("Impossible d'utiliser gogol_l car le graphe ne contient pas de circuit eulerien");
             }
         }
     }
