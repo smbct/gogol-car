@@ -47,39 +47,47 @@ public class Main {
 
         do {
 
+            // affichage du menu
             afficherMenu();
 
+            // vérification que la saisie est correcte
             try {
                 saisie = scan.nextInt();
             } catch(Exception ex) {
                 scan.nextLine();
             }
 
+            // si la saisie n'est pas une option valide, un message d'erreur est affiché
             if(saisie != 1 && saisie != 2 && saisie != 3) {
                 System.out.println("La saisie ne semble pas correcte. Veuillez saisir votre demande à nouveau :");
             }
 
         } while(saisie != 1 && saisie != 2 && saisie != 3);
 
+        // saisi le la ville
         System.out.println("Veuillez maintenant indiquer le nom du fichier contenant votre ville :");
         String ligne = scan.next();
 
         switch(saisie) {
 
             case 1:
-                gogolS.gogol_car_s car = new gogolS.gogol_car_s(ligne);
-                car.calculItineraire();
+                gogolS.gogol_car_s car_s = new gogolS.gogol_car_s();
+                car_s.calculItineraire(ligne);
                 break;
             case 2:
+                gogol_l.gogol_car_l car_l = new gogol_l.gogol_car_l();
+                car_l.calculItineraire(ligne);
                 break;
             case 3:
+                gogol_xl.gogol_car_xl car_xl = new gogol_xl.gogol_car_xl();
+                car_xl.calculItineraire(ligne);
                 break;
             default:
                 break;
 
         }
 
-        System.out.println("Bon trajet !");
+        System.out.println("\nBon trajet !");
 
     }
 

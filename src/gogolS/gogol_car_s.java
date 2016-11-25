@@ -14,12 +14,22 @@ public class gogol_car_s {
 	private listeSuccesseur racine; //noeud qui nous sert de point d'entre dans le graphe
 
     /**
-    * lit le fichier d'intance passe en parametre pour preparer le graph qui nous permet de resoudre le probleme
-    *
-    * @param fichier le chemin du fichier qui contien l'instance selon le formatage decrit
+    * constructeur par défaut
     */
-	public gogol_car_s(String fichier) {
-        FileReader fr;
+	public gogol_car_s() {
+
+    }
+
+	/**
+	 * lecture et chargement en mémoire du graphe à traiter
+	 * @param fichier le nom du fichier
+	 * @return 1 ssi la lecture s'est bien déroulée
+	 */
+	private int parser(String fichier) {
+
+		int res = 1;
+
+		FileReader fr;
         try {
             fr = new FileReader(fichier);
 
@@ -57,9 +67,12 @@ public class gogol_car_s {
             }
             this.racine = parc;
         } catch(IOException ex) {
-            System.out.println("erreur a l'ouvertue du ficher");
+            System.out.println("erreur a l'ouverture du ficher");
+			res = 0;
         }
-    }
+
+		return res;
+	}
 
     @Override
     /**
@@ -94,19 +107,19 @@ public class gogol_car_s {
     }
 
     /**
-     * fonction qui gere toute la gogol_s
+     * fonction de calcul de l'itinéraire pour gogol_s
+	 * @param fichier le nom du fichier contenant la ville
      */
-<<<<<<< HEAD
-    public static void calculItineraire(String fichier) {
-        gogol_car_s car_s = new gogol_car_s(fichier);
+    public void calculItineraire(String fichier) {
 
-=======
-    public void calculItineraire() {
->>>>>>> 7a49ce78821100a6b5bf03eacdca815692eaa169
-        System.out.println("Graphe de la ville : ");
-        System.out.println(this);
+		int resLecture = parser(fichier);
+		if(resLecture == 1) {
+			System.out.println("Graphe de la ville : ");
+			System.out.println(this);
 
-        System.out.print("\nItineraire à suivre :\n");
-        System.out.println(this.parcours());
+			System.out.print("\nItineraire à suivre :\n");
+			System.out.println(this.parcours());
+		}
+
     }
 }
