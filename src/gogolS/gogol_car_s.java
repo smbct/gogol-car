@@ -1,3 +1,4 @@
+package gogolS;
 import java.util.Hashtable;
 import java.io.FileReader;
 import java.io.BufferedReader;
@@ -92,9 +93,18 @@ public class gogol_car_s {
         }
     }
 
-    public static void main(String[] argc) {
-        gogol_car_s test = new gogol_car_s("../test.txt");
-        System.out.println(test.parcours());
-    }
+    /**
+     * fonction qui gere toute la gogol_s
+     */
+    //public static void calculItineraire(String fichier) {
+    public static void main(String[] args) {
+        String fichier = "../instances/test.txt";  
+        gogol_car_s car_s = new gogol_car_s(fichier);
+        
+        System.out.println("Graphe de la ville : ");
+        System.out.println(car_s);
 
+        System.out.print("\nItineraire à suivre :\n");
+        System.out.println(car_s.parcours());
+    }
 }

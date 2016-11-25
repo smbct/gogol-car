@@ -1,3 +1,4 @@
+package gogolS;
 import java.util.*;
 import java.lang.*;
 

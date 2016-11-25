@@ -25,11 +25,19 @@ public class gogol_car_l {
     private ArrayList<Integer> degre; // degré sortant de chaque sommet
 
     /**
-    * retourne le degre du sommet corespondant a la ligne i
+    * @brief retourne le degre du sommet corespondant a la ligne i
     */
     public Integer getDegre(int i) { return this.degre.get(i);}
 
+    /**
+    * @brief retourne le nombdre de place de la ville
+    */
     public int getNbPlace() { return this.nbPlace;}
+
+    /**
+    * @brief donne le nom de la place i
+    */
+    public String getNomPlace(int i) {return places.get(i);}
 
     public void parser(String nom) {
 
@@ -152,7 +160,6 @@ public class gogol_car_l {
         }
 
         //ajout dans les deux sens
-        System.out.println("deb et fin ("+deb+" ; "+fin+") : "+places.get(deb)+" "+places.get(fin));
         listeSuccesseurs.get(deb).ajouter_rue(new successeur(fin, places.get(fin), nomRue)); //dans la liste de successeur de deb
         listeSuccesseurs.get(fin).ajouter_rue(new successeur(deb, places.get(deb), nomRue)); //dans la liste de successeur de fin
 
@@ -340,23 +347,23 @@ public class gogol_car_l {
         }
         return res;
     }
-
     /**
-     * fonction de test de la classe
+     * fonction qui gere toute la gogol_l
      */
-    public static void main(String[] args) {
+    public static void calculItineraire(String fichier) {
 
         gogol_car_l car = new gogol_car_l();
-        car.parser(/*"../instances/euler_city.txt"*/"../instances/test.txt");
+        car.parser(fichier);
 
+        System.out.println("Graphe de la ville :");
         System.out.println(car);
 
         arborescence arbo = car.creer_arborescence();
 
         car.numeroter_rec(arbo);
 
+        System.out.print("Itineraire à suivre : ");
         car.cycle_gogol(arbo.get_sommet());
-
     }
 
 }

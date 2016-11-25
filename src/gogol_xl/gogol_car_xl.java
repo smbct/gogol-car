@@ -87,7 +87,7 @@ public class gogol_car_xl {
         //calcul des distances entre tous les sommets
         int matriceAdjacence [][] = new int[car_l.getNbPlace()][car_l.getNbPlace()];
         int successeurs [][] = new int[car_l.getNbPlace()][car_l.getNbPlace()];
-        //remplissage initila des matrices
+        //remplissage initil des matrices
         car_l.transformeMatrice(matriceAdjacence, successeurs);
         //floy-warshall avec memorisation des chemin
         for(int k=0; k<car_l.getNbPlace(); k++) {
@@ -107,9 +107,18 @@ public class gogol_car_xl {
         // créer les couples
         couplerGraphe(sommetImpair, matriceAdjacence, couplage);
 
-        System.out.println(couplage);
-
         ameliore(couplage, matriceAdjacence);
+
+        //affichage du couplage
+        System.out.print("Sommets de degrés impairs :");
+        for(int parc : sommetImpair) {
+            System.out.print(car_l.getNomPlace(parc)+"  ");
+        }
+        System.out.print("\nCouplage des sommets : ");
+        for(couple parc : couplage) {
+            System.out.print("{ "+car_l.getNomPlace(parc.premier)+" ; "+car_l.getNomPlace(parc.premier)+" } ");
+        }
+        System.out.println("\n");
 
         //doublage des arretes le long des chemin du couplage
         int parcrec, precrec;
@@ -122,8 +131,6 @@ public class gogol_car_xl {
             }
             car_l.ajout_arrete (parcrec, parc.deuxieme);
         }
-
-        System.out.println("graphe : "+car_l);
     }
 
 
@@ -161,14 +168,12 @@ public class gogol_car_xl {
     }
 
     /**
-     * fonction de test de la classe
+     * fonction qui gere toute la gogol_xl
      */
-    public static void main(String[] args) {
+    public static void calculItineraire(String fichier) {
 
         gogol_car_xl car = new gogol_car_xl();
-        car.parser("../instances/NantesPasEuler.txt");
-
-
+        car.parser(fichier);
 
         car.rendreEulerien();
 
@@ -176,10 +181,13 @@ public class gogol_car_xl {
 
         car.car_l.numeroter_rec(arbo);
 
+        //affichage du graphe
+        System.out.println("Graphe rendu eulerien : ");
         System.out.println(car);
 
+        //calcul de l'itineraire
+        System.out.print("Itineraire à suivre : ");
         car.car_l.cycle_gogol(arbo.get_sommet());
-
     }
 
 }
