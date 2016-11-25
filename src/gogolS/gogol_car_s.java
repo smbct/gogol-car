@@ -15,7 +15,15 @@ public class gogol_car_s {
 	private listeSuccesseur racine; //noeud qui nous sert de point d'entre dans le graphe
 
     /**
+<<<<<<< HEAD
+    * lit le fichier d'intance passe en parametre pour preparer le graph qui nous permet de resoudre le probleme
+    * <p>
+    * Le graphe construit a pour sommet les rues et pour arrete les places, deux rue sont relié si elles sont une extremité (places) en commun
+    *
+    * @param fichier le chemin du fichier qui contien l'instance selon le formatage decrit
+=======
     * constructeur par défaut
+>>>>>>> c136eca739d5aff35310975db09d1d40256a715c
     */
 	public gogol_car_s() {
 
@@ -32,20 +40,23 @@ public class gogol_car_s {
 
 		FileReader fr;
         try {
+            //objets de lecture
             fr = new FileReader(fichier);
 
     		BufferedReader reader = new BufferedReader(fr);
     		String tmp, tmp1, tmp2, tmp3;
+            //pour les arretes : pour trouver l'ensemble des arettes ayant comme extremité chaque place
     		Hashtable<String, TreeSet<listeSuccesseur> > noeuds = new Hashtable<String, TreeSet<listeSuccesseur>> (0); //nomplaces => rue adjacentes
 
-    		tmp = reader.readLine();
+    		tmp = reader.readLine(); //on lit le nombre de place
             int nbplace = Integer.parseInt(tmp.substring(0,tmp.lastIndexOf(".")));
-            tmp = reader.readLine();
+            tmp = reader.readLine(); //on lit le noombre de rue
             int nbrue = Integer.parseInt(tmp.substring(0,tmp.lastIndexOf(".")));
 
-            //lecteure nom des places
+            //lecture du nom des places
             for(int i = 0; i<nbplace; ++i) {
             	tmp = reader.readLine();
+                //chaque place est une case de la table de hashage, pour l'instant aucune rue n'y est associe
             	noeuds.put(tmp.substring(0,tmp.lastIndexOf(".")), new TreeSet<listeSuccesseur>());
             }
 
