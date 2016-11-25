@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.lang.Integer;
 import java.util.TreeSet;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
 * classe qui implement l'algorithme gogolS
@@ -25,9 +26,9 @@ public class gogol_car_s {
 	 * @param fichier le nom du fichier
 	 * @return 1 ssi la lecture s'est bien déroulée
 	 */
-	private int parser(String fichier) {
+	private boolean parser(String fichier) {
 
-		int res = 1;
+		boolean res = true;
 
 		FileReader fr;
         try {
@@ -68,7 +69,7 @@ public class gogol_car_s {
             this.racine = parc;
         } catch(IOException ex) {
             System.out.println("erreur a l'ouverture du ficher");
-			res = 0;
+			res = false;
         }
 
 		return res;
@@ -111,31 +112,25 @@ public class gogol_car_s {
 	 * @param fichier le nom du fichier contenant la ville
      */
     public void calculItineraire(String fichier) {
-<<<<<<< HEAD
 
-		int resLecture = parser(fichier);
-		if(resLecture == 1) {
+		if(parser(fichier)) {
+
 			System.out.println("Graphe de la ville : ");
 			System.out.println(this);
 
 			System.out.print("\nItineraire à suivre :\n");
-			System.out.println(this.parcours());
+			String res = this.parcours();
+			System.out.println(res);
+			try{
+				PrintWriter writer = new PrintWriter("itineraire.txt", "UTF-8");
+				writer.println(res);
+				writer.close();
+			} catch (Exception e) {
+				System.out.println("Erreur pendant l'ecriture de l'itineraire dans un fichier");
+			}
+
 		}
 
-=======
-        System.out.println("Graphe de la ville : ");
-        System.out.println(this);
 
-        System.out.print("\nItineraire à suivre :\n");
-        String res = this.parcours();
-        System.out.println(res);
-        try{
-            PrintWriter writer = new PrintWriter("itineraire.txt", "UTF-8");
-            writer.println(res);
-            writer.close();
-        } catch (Exception e) {
-            System.out.println("Erreur pendant l'ecriture de l'itineraire dans un fichier");
-        }
->>>>>>> 343b122c671159097a117f3b6d7658927686987e
     }
 }

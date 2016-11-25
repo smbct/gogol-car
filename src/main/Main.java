@@ -33,6 +33,7 @@ public class Main {
         System.out.println("\t1) Photographies des rues en deux temps (gogol S)");
         System.out.println("\t2) Photographies des rues en un temps sur un graphe eulerien (gogol L)");
         System.out.println("\t3) Photographies des rues en un temps sur un graphe non eulerien (gogol XL)");
+        System.out.println("\t4) Quitter le programme");
     }
 
     /**
@@ -58,15 +59,18 @@ public class Main {
             }
 
             // si la saisie n'est pas une option valide, un message d'erreur est affiché
-            if(saisie != 1 && saisie != 2 && saisie != 3) {
+            if(saisie != 1 && saisie != 2 && saisie != 3 && saisie != 4) {
                 System.out.println("La saisie ne semble pas correcte. Veuillez saisir votre demande à nouveau :");
             }
 
-        } while(saisie != 1 && saisie != 2 && saisie != 3);
+        } while(saisie != 1 && saisie != 2 && saisie != 3 && saisie != 4);
 
-        // saisi le la ville
-        System.out.println("Veuillez maintenant indiquer le nom du fichier contenant votre ville :");
-        String ligne = scan.next();
+        // saisie le la ville
+        String ligne = null;
+        if(saisie != 4) {
+            System.out.println("Veuillez maintenant indiquer le nom du fichier contenant votre ville :");
+            ligne = scan.next();
+        }
 
         switch(saisie) {
 
@@ -84,10 +88,7 @@ public class Main {
                 break;
             default:
                 break;
-
         }
-
-        System.out.println("\nBon trajet !");
 
     }
 
