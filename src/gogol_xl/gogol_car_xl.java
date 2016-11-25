@@ -170,24 +170,22 @@ public class gogol_car_xl {
     /**
      * fonction qui gere toute la gogol_xl
      */
-    public static void calculItineraire(String fichier) {
+    public void calculItineraire(String fichier) {
+        this.parser(fichier);
 
-        gogol_car_xl car = new gogol_car_xl();
-        car.parser(fichier);
+        this.rendreEulerien();
 
-        car.rendreEulerien();
+        arborescence arbo = this.car_l.creer_arborescence();
 
-        arborescence arbo = car.car_l.creer_arborescence();
-
-        car.car_l.numeroter_rec(arbo);
+        this.car_l.numeroter_rec(arbo);
 
         //affichage du graphe
         System.out.println("Graphe rendu eulerien : ");
-        System.out.println(car);
+        System.out.println(this);
 
         //calcul de l'itineraire
         System.out.print("Itineraire à suivre : ");
-        car.car_l.cycle_gogol(arbo.get_sommet());
+        this.car_l.cycle_gogol(arbo.get_sommet());
     }
 
 }

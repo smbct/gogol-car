@@ -350,20 +350,19 @@ public class gogol_car_l {
     /**
      * fonction qui gere toute la gogol_l
      */
-    public static void calculItineraire(String fichier) {
+    public void calculItineraire(String fichier) {
 
-        gogol_car_l car = new gogol_car_l();
-        car.parser(fichier);
+        this.parser(fichier);
 
         System.out.println("Graphe de la ville :");
-        System.out.println(car);
+        System.out.println(this);
 
-        arborescence arbo = car.creer_arborescence();
+        arborescence arbo = this.creer_arborescence();
 
-        car.numeroter_rec(arbo);
+        this.numeroter_rec(arbo);
 
         System.out.print("Itineraire à suivre : ");
-        car.cycle_gogol(arbo.get_sommet());
+        this.cycle_gogol(arbo.get_sommet());
     }
 
 }
