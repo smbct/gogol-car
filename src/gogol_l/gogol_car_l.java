@@ -333,9 +333,9 @@ public class gogol_car_l {
     */
     public boolean estEuler() {
         boolean res = true;
-        int parc = 0
+        int parc = 0;
         while (res && (parc<this.getNbPlace())) {
-            res = res && (this.getDegre(parc) % 2 != 0)
+            res = res && (this.getDegre(parc) % 2 != 0);
             parc++;
         }
         return res;
