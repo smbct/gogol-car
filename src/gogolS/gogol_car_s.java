@@ -96,15 +96,11 @@ public class gogol_car_s {
     /**
      * fonction qui gere toute la gogol_s
      */
-    //public static void calculItineraire(String fichier) {
-    public static void main(String[] args) {
-        String fichier = "../instances/test.txt";  
-        gogol_car_s car_s = new gogol_car_s(fichier);
-        
+    public void calculItineraire() {
         System.out.println("Graphe de la ville : ");
-        System.out.println(car_s);
+        System.out.println(this);
 
         System.out.print("\nItineraire à suivre :\n");
-        System.out.println(car_s.parcours());
+        System.out.println(this.parcours());
     }
 }
