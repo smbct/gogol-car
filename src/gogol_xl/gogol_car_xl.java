@@ -20,8 +20,8 @@ public class gogol_car_xl {
         car_l = new gogol_car_l();
     }
 
-    public void parser(String nom) {
-        car_l.parser(nom);
+    public boolean parser(String nom) {
+        return car_l.parser(nom);
     }
 
     public String toString() {
@@ -172,21 +172,20 @@ public class gogol_car_xl {
      * fonction qui gere toute la gogol_xl
      */
     public void calculItineraire(String fichier) {
-        this.parser(fichier);
+        if (this.parser(fichier)) {
+            this.rendreEulerien();
 
-        this.rendreEulerien();
+            arborescence arbo = this.car_l.creer_arborescence();
 
-        arborescence arbo = this.car_l.creer_arborescence();
+            this.car_l.numeroter_rec(arbo);
 
-        this.car_l.numeroter_rec(arbo);
+            //affichage du graphe
+            System.out.println("Graphe rendu eulerien : ");
+            System.out.println(this);
 
-        //affichage du graphe
-        System.out.println("Graphe rendu eulerien : ");
-        System.out.println(this);
-
-        //calcul de l'itineraire
-        System.out.print("Itineraire à suivre : ");
-        this.car_l.cycle_gogol(arbo.get_sommet());
+            //calcul de l'itineraire
+            this.car_l.cycle_gogol(arbo.get_sommet());
+        }
     }
 
 }

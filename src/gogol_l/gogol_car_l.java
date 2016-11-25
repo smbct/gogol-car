@@ -10,6 +10,8 @@ import java.lang.*;
 
 import java.util.Hashtable;
 
+import java.io.PrintWriter;
+
 /**
  * @class gogol_car_l
  */
@@ -39,7 +41,7 @@ public class gogol_car_l {
     */
     public String getNomPlace(int i) {return places.get(i);}
 
-    public void parser(String nom) {
+    public boolean parser(String nom) {
 
         FileReader fr;
         try {
@@ -103,10 +105,11 @@ public class gogol_car_l {
                 degre.set(num1, degre.get(num1)+1);
                 degre.set(num2, degre.get(num2)+1);
             }
-
+            return true;//tout c'est bien passe
     	} catch(IOException ex) {
 			System.out.println("Erreur à l'ouverture du ficher");
 			fr = null;
+            return false; //erreur
 		}
 
 
@@ -301,10 +304,27 @@ public class gogol_car_l {
 
         }
 
-        for(int sommet : chemin) {
-            System.out.print(places.get(sommet) + ", ");
+
+        //ecriture des resultats
+        try{
+            PrintWriter writer = new PrintWriter("itineraire.txt", "UTF-8");
+            writer.print("Itineraire à suivre : ");
+            System.out.print("Itineraire à suivre : ");
+            for(int sommet : chemin) {
+                writer.(places.get(sommet) + ", ");
+                System.out.print(places.get(sommet) + ", ");
+            }
+            writer.println("");
+            System.out.println("");
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("Erreur à l'ecriture du parcours dans un fichier");
+            System.out.print("Itineraire à suivre : ");
+            for(int sommet : chemin) {
+                System.out.print(places.get(sommet) + ", ");
+            }
+            System.out.println("");
         }
-        System.out.println("");
 
     }
 
@@ -347,22 +367,25 @@ public class gogol_car_l {
         }
         return res;
     }
+
     /**
      * fonction qui gere toute la gogol_l
      */
     public void calculItineraire(String fichier) {
+        if (this.parser(fichier)) {
+            System.out.println("Graphe de la ville :");
+            System.out.println(this);
 
-        this.parser(fichier);
+            if (this.estEuler()) {
+                arborescence arbo = this.creer_arborescence();
 
-        System.out.println("Graphe de la ville :");
-        System.out.println(this);
+                this.numeroter_rec(arbo);
 
-        arborescence arbo = this.creer_arborescence();
-
-        this.numeroter_rec(arbo);
-
-        System.out.print("Itineraire à suivre : ");
-        this.cycle_gogol(arbo.get_sommet());
+                this.cycle_gogol(arbo.get_sommet());
+            } else {
+                System.out.println("Impossible d'utiliser gogol_l car le graphe ne contien pas de circuit eulerien");
+            }
+        }
     }
 
 }

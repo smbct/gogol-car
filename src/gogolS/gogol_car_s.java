@@ -111,6 +111,7 @@ public class gogol_car_s {
 	 * @param fichier le nom du fichier contenant la ville
      */
     public void calculItineraire(String fichier) {
+<<<<<<< HEAD
 
 		int resLecture = parser(fichier);
 		if(resLecture == 1) {
@@ -121,5 +122,20 @@ public class gogol_car_s {
 			System.out.println(this.parcours());
 		}
 
+=======
+        System.out.println("Graphe de la ville : ");
+        System.out.println(this);
+
+        System.out.print("\nItineraire à suivre :\n");
+        String res = this.parcours();
+        System.out.println(res);
+        try{
+            PrintWriter writer = new PrintWriter("itineraire.txt", "UTF-8");
+            writer.println(res);
+            writer.close();
+        } catch (Exception e) {
+            System.out.println("Erreur pendant l'ecriture de l'itineraire dans un fichier");
+        }
+>>>>>>> 343b122c671159097a117f3b6d7658927686987e
     }
 }
