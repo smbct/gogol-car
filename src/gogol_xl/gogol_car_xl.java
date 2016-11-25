@@ -14,7 +14,7 @@ import java.util.Hashtable;
 
 public class gogol_car_xl {
 
-    private gogol_car_l car_l;
+    private gogol_car_l car_l; //la gogol_xl ne fait que adapte le graphe pour que la l puisse l'utiliser
 
     public gogol_car_xl() {
         car_l = new gogol_car_l();

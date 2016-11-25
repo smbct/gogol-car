@@ -15,15 +15,7 @@ public class gogol_car_s {
 	private listeSuccesseur racine; //noeud qui nous sert de point d'entre dans le graphe
 
     /**
-<<<<<<< HEAD
-    * lit le fichier d'intance passe en parametre pour preparer le graph qui nous permet de resoudre le probleme
-    * <p>
-    * Le graphe construit a pour sommet les rues et pour arrete les places, deux rue sont relié si elles sont une extremité (places) en commun
-    *
-    * @param fichier le chemin du fichier qui contien l'instance selon le formatage decrit
-=======
     * constructeur par défaut
->>>>>>> c136eca739d5aff35310975db09d1d40256a715c
     */
 	public gogol_car_s() {
 
@@ -68,22 +60,27 @@ public class gogol_car_s {
             	tmp2 = tmp.substring(tmp.indexOf(";")+1,tmp.lastIndexOf(";")-1 ); //nom extremite 1
             	tmp3 = tmp.substring(tmp.lastIndexOf(";")+1, tmp.lastIndexOf(".")); //nom extremite 2
                 parc = new listeSuccesseur(tmp1 , tmp2 , tmp3);
+                //on ajoute comme successeur toutes les aretres qui ont une place en commun avec celle ci
                 for(listeSuccesseur j : noeuds.get(tmp2)) {
                     parc.ajoutSucc(j);
+                    j.ajoutSucc(parc);
                 }
                 for(listeSuccesseur j : noeuds.get(tmp3)) {
                     parc.ajoutSucc(j);
+                    j.ajoutSucc(parc);
                 }
+                //on ajoute cette rue au esemble de rue ayant les meme extremites
                 noeuds.get(tmp2).add(parc);
                 noeuds.get(tmp3).add(parc);
             }
+            //on prend arbitrairement comme racine le dernier noeud ajoute
             this.racine = parc;
         } catch(IOException ex) {
             System.out.println("erreur a l'ouverture du ficher");
 			res = false;
         }
 
-		return res;
+		return res; //vrai si tout c'est bien passe, faux sinon
 	}
 
     @Override
@@ -95,11 +92,12 @@ public class gogol_car_s {
     }
 
     /**
-    * effectue un parcours en profondeur du graphe pour obtenir le parcour de la gogol car
+    * effectue un parcours recursif en profondeur du graphe pour obtenir le parcours de la gogol car
     *
     * @return la chaine de caractère dans laquelle est ecrit le chemin a suivre
     */
     public String parcours() {
+        //ondetermine la place de depart (choix entre les deux etremites de la rue racine), puis on affiche le parcours
         return "depart de " + encommun(racine, racine.getSucc().first()) + " : \n" + racine.parcours();
     }
 
@@ -120,6 +118,7 @@ public class gogol_car_s {
 
     /**
      * fonction de calcul de l'itinéraire pour gogol_s
+     *
 	 * @param fichier le nom du fichier contenant la ville
      */
     public void calculItineraire(String fichier) {
@@ -131,7 +130,8 @@ public class gogol_car_s {
 
 			System.out.print("\nItineraire à suivre :\n");
 			String res = this.parcours();
-			System.out.println(res);
+			//output des resultats
+            System.out.println(res);
 			try{
 				PrintWriter writer = new PrintWriter("itineraire.txt", "UTF-8");
 				writer.println(res);
@@ -139,7 +139,6 @@ public class gogol_car_s {
 			} catch (Exception e) {
 				System.out.println("Erreur pendant l'ecriture de l'itineraire dans un fichier");
 			}
-
 		}
 
 

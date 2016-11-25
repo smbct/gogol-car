@@ -60,12 +60,19 @@ public class listeSuccesseur implements Comparable, Comparator{
 	*/
 	public String getfin() {return this.fin;}
 
+	//fonction de comparaison pour les set
+	/**
+	* compare deux rue par rapport a leur nom
+	*/
 	@Override
 	public int compareTo(Object lautre) {
 		listeSuccesseur lautreCast = (listeSuccesseur)lautre;
 		return this.nom.compareTo(lautreCast.nom);
 	}
 
+	/**
+	* compare deux rue par rapport a leur nom
+	*/
 	@Override
 	public int compare(Object o1, Object o2) {
 		listeSuccesseur o1Cast = (listeSuccesseur)o1;
@@ -73,6 +80,9 @@ public class listeSuccesseur implements Comparable, Comparator{
 		return compare(o1Cast.nom, o2Cast.nom);
 	}
 
+	/**
+	* on consideres deux rue comme egales si elles ont le meme nom
+	*/
 	@Override
 	public boolean equals(Object lautre) {
 		listeSuccesseur lautreCast = (listeSuccesseur)lautre;
@@ -108,14 +118,15 @@ public class listeSuccesseur implements Comparable, Comparator{
 	* @return la string decrivant le chemin a suivre
 	*/
 	public String parcours() {
+		//on part de cette rue
 		String res = this.nom;
-		this.visite = true;
-		for( listeSuccesseur parc : this.succ) {
-			if(! parc.visite) {
+		this.visite = true; //cette rue est maintenant parcourue
+		for( listeSuccesseur parc : this.succ) { //on parcours tous ses successeur
+			if(! parc.visite) { //si il ne sont pas deja traverse on y va
 				res = res + "\n" + parc.parcours();
 			}
 		}
-		res = res + "\n" + this.nom;
+		res = res + "\n" + this.nom; //au retour on repasse dans cette rue dans l'autre sens
 		return res;
 	}
 
