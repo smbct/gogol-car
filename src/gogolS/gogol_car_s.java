@@ -12,7 +12,7 @@ import java.io.IOException;
 public class gogol_car_s {
 
 	private listeSuccesseur racine; //noeud qui nous sert de point d'entre dans le graphe
-	
+
     /**
     * lit le fichier d'intance passe en parametre pour preparer le graph qui nous permet de resoudre le probleme
     *
@@ -22,7 +22,7 @@ public class gogol_car_s {
         FileReader fr;
         try {
             fr = new FileReader(fichier);
-        	
+
     		BufferedReader reader = new BufferedReader(fr);
     		String tmp, tmp1, tmp2, tmp3;
     		Hashtable<String, TreeSet<listeSuccesseur> > noeuds = new Hashtable<String, TreeSet<listeSuccesseur>> (0); //nomplaces => rue adjacentes
@@ -37,7 +37,7 @@ public class gogol_car_s {
             	tmp = reader.readLine();
             	noeuds.put(tmp.substring(0,tmp.lastIndexOf(".")), new TreeSet<listeSuccesseur>());
             }
-            
+
             //lecture des rues
             listeSuccesseur parc = null;
             for(int i = 0; i<nbrue; ++i) {
@@ -50,7 +50,7 @@ public class gogol_car_s {
                     parc.ajoutSucc(j);
                 }
                 for(listeSuccesseur j : noeuds.get(tmp3)) {
-                    parc.ajoutSucc(j);   
+                    parc.ajoutSucc(j);
                 }
                 noeuds.get(tmp2).add(parc);
                 noeuds.get(tmp3).add(parc);
@@ -59,7 +59,7 @@ public class gogol_car_s {
         } catch(IOException ex) {
             System.out.println("erreur a l'ouvertue du ficher");
         }
-    }	
+    }
 
     @Override
     /**
@@ -96,11 +96,9 @@ public class gogol_car_s {
     /**
      * fonction qui gere toute la gogol_s
      */
-    //public static void calculItineraire(String fichier) {
-    public static void main(String[] args) {
-        String fichier = "../instances/test.txt";  
+    public static void calculItineraire(String fichier) {
         gogol_car_s car_s = new gogol_car_s(fichier);
-        
+
         System.out.println("Graphe de la ville : ");
         System.out.println(car_s);
 
