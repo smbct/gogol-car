@@ -250,23 +250,22 @@ public class gogol_car_l {
         // numérotation des arcs sortants
         successeur suc = listeSuccesseurs.get(sommet);
         int numero = 1;
-        int numFils = degre.get(sommet)-1;
+        int numFils = degre.get(sommet);
+        if(sommetPere != -1) {
+            numFils --;
+        }
         while(suc != null) {
 
-            // si l'arc qui est dans l'anti-arborescence est trouvée, il prend le plus grand numéro
-            // si c'est l'anti-racine, le numéro le plus grand est attribué de manière quelconque
+            // si l'arc qui est dans l'anti-arborescence est trouvé, il prend le plus grand numéro
+            // si le sommet de numérotation est l'anti-racine, le numéro le plus grand est attribué de manière quelconque
             // on s'assure à chaque fois de numéroter les arcs sortants correspondant aux arcs entrants de l'anti-racine de telle sorte qu'ils ne soient pas les plus petits
 
             if(arbo.est_fils(suc.get_sommet())) { // numérotation la plus grande possible
                 suc.numeroter(numFils);
                 numFils --;
             }
-            else if(suc.get_sommet() == sommetPere || sommetPere == -1) { // numérotation avec le plus grand numéro
-                suc.numeroter(degre.get(sommet));
-                // s'il n'y a pas de sommet père, le premier sommet est le plus grand
-                if(sommetPere == -1) {
-                    sommetPere = suc.get_sommet(); // ce numéro ne sera pas réutilisé
-                }
+            else if(suc.get_sommet() == sommetPere) { // numérotation avec le plus grand numéro
+                suc.numeroter(degre.get(sommet)); // le numéro le plus grand est égal au degré sortant
             } else { // numérotation quelconque
                 suc.numeroter(numero);
                 numero ++;
