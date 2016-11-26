@@ -109,11 +109,11 @@ public class gogol_car_l {
                     listeSuccesseurs.get(num2).ajouter_rue(suc);
                 }
 
-                // mise à jour des degrés sortant
+                // mise à jour des degrés sortants
                 degre.set(num1, degre.get(num1)+1);
                 degre.set(num2, degre.get(num2)+1);
             }
-            return true;//tout c'est bien passe
+            return true; //tout s'est bien passe
     	} catch(IOException ex) {
 			System.out.println("Erreur à l'ouverture du ficher");
 			fr = null;
@@ -185,7 +185,7 @@ public class gogol_car_l {
     }
 
     /**
-     * création de l'arborescence de la ville
+     * création de l'arborescence recouvrante de la ville
      * @pre le graphe est connexe
      */
     public arborescence creer_arborescence() {
