@@ -43,11 +43,13 @@ public class gogol_car_l {
     /**
      * chargement en mémoire de la ville
      * @param nom le nom du fichier contenant la ville
+     * @return vrai ssi la lecture s'est bien déroulée
      */
     public boolean parser(String nom) {
 
         FileReader fr;
         try {
+            // création des objtes permettant de lire le fichier contenant la ville
         	fr = new FileReader(nom);
             BufferedReader reader = new BufferedReader(fr);
 
@@ -66,6 +68,7 @@ public class gogol_car_l {
             // création de la liste des degrés sortant mémorisant le degré sortant de chaque sommet
             degre = new ArrayList<Integer>(nbPlace);
             for(int i = 0; i < nbPlace; i++) {
+                // pour l'instant, les degrés sont initialisés à 0
                 degre.add(0);
             }
 
@@ -154,7 +157,7 @@ public class gogol_car_l {
     }
 
     /**
-    * pour gogol_xl, sert à doubler des aretes
+    * utilisé par gogol_xl, sert à doubler des aretes dans le graphe
     * @param deb la premiere extremite de l'arete
     * @param fin la seconde extremite de l'arete
     * @pre cette arete existe deja
@@ -200,9 +203,10 @@ public class gogol_car_l {
     }
 
     /**
-     * création récursivement d'un arbre recouvrant du graphe par parcours en profondeur
+     * création récursive d'une arborescence recouvrante du graphe par parcours en profondeur
      * @param sommet le sommet à visiter
      * @param visite la liste des sommets qui ont été visités
+     * @return la racine de l'arborescence créee à partir du sommet donné en paramètre
      */
     private arborescence creer_arborescence_rec(int sommet, ArrayList<Boolean> visite) {
 
@@ -218,9 +222,10 @@ public class gogol_car_l {
 
             // si le successeur n'a pas été visité, il est ajouté à l'arborescence
             if(!visite.get(succ.get_sommet())) {
+                // le successeur est ajouté par appel récursif de la fonction
                 arbo.ajouterFils(creer_arborescence_rec(succ.get_sommet(), visite));
             }
-            // avancement vers le prochain successeur
+            // avancement vers le prochain successeur dans la liste des successeurs
             succ = succ.suivant();
         }
 
@@ -233,11 +238,11 @@ public class gogol_car_l {
      */
     public void numeroter_rec(arborescence arbo) {
 
-        // récupération des indices des sommets : le sommet courant et sont successeur dans l'anti-arborescence
+        // récupération des indices des sommets : le sommet courant et sont successeur dans l'anti-arborescence (c'est à dire son prédecesseur dans l'arborescence)
         int sommet = arbo.get_sommet();
         int sommetPere = -1;
-        // le successeur correspond au père dans l'arborescence créée
-        // si le sommet est la racine de l'arborescence, alors l'indice du père est laissée à -1
+        // le successeur correspond ainsi au père dans l'arborescence créée
+        // si le sommet est la racine de l'arborescence, alors l'indice du père est laissé à -1
         if(arbo.get_pere() != null) {
             sommetPere = arbo.get_pere().get_sommet();
         }
@@ -250,13 +255,13 @@ public class gogol_car_l {
 
             // si l'arc qui est dans l'anti-arborescence est trouvée, il prend le plus grand numéro
             // si c'est l'anti-racine, le numéro le plus grand est attribué de manière quelconque
-            // on s'assure à chaque fois de numéroter les arcs sortants correspondant aux arcs entrant de l'anti-racine de telle sorte qu'ils ne soient pas les plus petits
+            // on s'assure à chaque fois de numéroter les arcs sortants correspondant aux arcs entrants de l'anti-racine de telle sorte qu'ils ne soient pas les plus petits
 
             if(arbo.est_fils(suc.get_sommet())) { // numérotation la plus grande possible
                 suc.numeroter(numFils);
                 numFils --;
             }
-            else if(suc.get_sommet() == sommetPere || sommetPere == -1) {
+            else if(suc.get_sommet() == sommetPere || sommetPere == -1) { // numérotation avec le plus grand numéro
                 suc.numeroter(degre.get(sommet));
                 // s'il n'y a pas de sommet père, le premier sommet est le plus grand
                 if(sommetPere == -1) {
@@ -266,10 +271,10 @@ public class gogol_car_l {
                 suc.numeroter(numero);
                 numero ++;
             }
-            suc = suc.suivant();
+            suc = suc.suivant(); // passage au successeur suivant
         }
 
-        // numérotation récursive des autres sommets
+        // numérotation récursive des autres sommets, correspondants aux fils dans l'arborescence
         for(arborescence fils : arbo.get_fils()) {
             numeroter_rec(fils);
         }
@@ -277,15 +282,16 @@ public class gogol_car_l {
 
     /**
      * Calcule le cycle que doit effectuer la voiture de gogol
-     * @param numeros la numérotation du graphe
      * @param racine la racine de l'arborescence
      */
     public void cycle_gogol(int racine) {
 
         boolean continuer = Boolean.TRUE;
 
+        // création d'une liste qui contiendra le parcours à réaliser par le véhicule
         ArrayList<Integer> chemin = new ArrayList<Integer>();
 
+        // le point de départ est ajouté à la liste
         chemin.add(racine);
 
         // sommet courant du graphe
@@ -293,18 +299,21 @@ public class gogol_car_l {
 
         while(continuer) {
 
-            // recherche du prochain sommet
+            // recherche du prochain sommet à ajouter dans le chemin : celui qui a le plus petit numéro
             successeur succMin = null;
             successeur succ = listeSuccesseurs.get(sommetCourant);
+
+            // parcours de tous les successeurs du sommet et détermination de celui qui a le plus petit numéro
             while(succ != null) {
 
                 if(!succ.est_utilise() && (succMin == null || succ.get_numero() < succMin.get_numero())) {
                     succMin = succ;
                 }
+                // passage au successeur suivant dans le chaînage
                 succ = succ.suivant();
             }
 
-            // si un sommet a été trouvé, la recherche continue
+            // si un sommet a été trouvé, il est ajouté et le chemin continue à partir de celui-ci
             if(succMin != null) {
 
                 // marquage des deux arcs
@@ -312,9 +321,12 @@ public class gogol_car_l {
                 // seule opération couteuse : en O du degré sortant du sommet (parcours de la liste d'adjacence)
                 listeSuccesseurs.get(succMin.get_sommet()).marquer_rue(sommetCourant);
 
+                // ajout du sommet au chemin
                 chemin.add(succMin.get_sommet());
+
+                // passage au sommet suivant
                 sommetCourant = succMin.get_sommet();
-            } else {
+            } else { // sinon, le cycle est terminé, l'algorithme s'arrête
                 continuer = false;
             }
 
@@ -346,8 +358,8 @@ public class gogol_car_l {
 
     /**
     * transforme la representation en liste d'adjacence en une matrice d'adjacence
-    * @param matriceAdjacence la matrice qui contien les distances entre les sommets
-    * @param succecesseurs indique les sommet a parcourir pour aller de sommet en sommet
+    * @param matriceAdjacence la matrice qui contient les distances entre les sommets
+    * @param succecesseurs indique les sommet à parcourir pour aller de sommet en sommet
     **/
     public void transformeMatrice(int matriceAdjacence [][], int succecesseurs[][]) {
         //initialisation
@@ -359,7 +371,7 @@ public class gogol_car_l {
             matriceAdjacence[i][i] = 0; //un sommet n'est pas distant de lui meme
         }
 
-        //ajout de aretes
+        //ajout de arêtes
         successeur parcrec;
         for(int parc = 0; parc<nbPlace; ++parc) {
             parcrec = listeSuccesseurs.get(parc);
@@ -378,6 +390,7 @@ public class gogol_car_l {
         boolean res = true;
         int parc = 0;
         while (res && (parc<this.getNbPlace())) {
+            // le graphe est eulerien ssi le degré de tous les sommets est pair
             res = res && (this.getDegre(parc) % 2 == 0);
             parc++;
         }
@@ -388,15 +401,23 @@ public class gogol_car_l {
      * fonction qui gere toute la gogol_l
      */
     public void calculItineraire(String fichier) {
+
+        // si le fichier a pu être lu, le calcul peut commencer
         if (this.parser(fichier)) {
+
             System.out.println("Graphe de la ville :");
             System.out.println(this);
 
+            // vérification que le graphe est eulerien ; si ce n'est pas le cas, l'itinéraire ne peut pas être calculé
             if (this.estEuler()) {
+
+                // création de l'arborescence utilisée pour la numérotation
                 arborescence arbo = this.creer_arborescence();
 
+                // numérotation des arcs
                 this.numeroter_rec(arbo);
 
+                // calcul du cycle eulerien donnant le trajet du vehicule
                 this.cycle_gogol(arbo.get_sommet());
             } else {
                 System.out.println("Impossible d'utiliser gogol_l car le graphe ne contient pas de circuit eulerien");

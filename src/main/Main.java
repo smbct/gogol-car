@@ -65,13 +65,14 @@ public class Main {
 
         } while(saisie != 1 && saisie != 2 && saisie != 3 && saisie != 4);
 
-        // saisie le la ville
+        // saisie du fichier contenant la ville
         String ligne = null;
         if(saisie != 4) {
             System.out.println("Veuillez maintenant indiquer le nom du fichier contenant votre ville :");
             ligne = scan.next();
         }
 
+        // lancement de l'algorithme désiré en fonction de l'option choisie
         switch(saisie) {
 
             case 1:

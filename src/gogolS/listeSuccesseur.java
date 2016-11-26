@@ -3,7 +3,7 @@ import java.util.*;
 import java.lang.*;
 
 /**
-* contien le graphe de la ville avec les rues comme sommet et les places comme arrete
+* contient le graphe de la ville avec les rues comme sommet et les places comme arrete
 */
 public class listeSuccesseur implements Comparable, Comparator{
 	private String nom; //nom de cette rue
@@ -15,7 +15,7 @@ public class listeSuccesseur implements Comparable, Comparator{
 
 	/**
 	* construit le sommet corespondant a une rue entre deux places
-	* 
+	*
 	* @param nom le nom de la rue
 	* @param deb une extremite de la rue
 	* @param fin l'autre extremite de la rue
@@ -41,7 +41,7 @@ public class listeSuccesseur implements Comparable, Comparator{
 
 	/**
 	* renvoi l'ensemble des successeur de cette rue
-	* 
+	*
 	* @return l'ensemble des rues adjacentes a celle ci
 	*/
 	public TreeSet<listeSuccesseur> getSucc() {return this.succ;}
@@ -96,7 +96,7 @@ public class listeSuccesseur implements Comparable, Comparator{
 	}
 
 	/**
-	* parcour recursivement le graph pour l'afficher
+	* parcourt recursivement le graph pour l'afficher
 	*
 	* @param dejaParcouru l'ensemble des sommet que l'on a deja visite
 	* @rtuen la string contenant toute les information de l'arbre
@@ -113,8 +113,8 @@ public class listeSuccesseur implements Comparable, Comparator{
 	}
 
 	/**
-	* effectue un pours en profondeur de l'arbre pour determiner le chemin de la gogol car
-	* 
+	* effectue un parcours en profondeur de l'arbre pour determiner le chemin de la gogol car
+	*
 	* @return la string decrivant le chemin a suivre
 	*/
 	public String parcours() {
