@@ -131,7 +131,7 @@ public class listeSuccesseur implements Comparable, Comparator{
 	}
 
     public static void main(String[] argc) {
-        System.out.println("hello graphe");
+
     }
 
 }
