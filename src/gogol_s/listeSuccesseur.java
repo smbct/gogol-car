@@ -1,4 +1,4 @@
-package gogolS;
+package gogol_s;
 import java.util.*;
 import java.lang.*;
 

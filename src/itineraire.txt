@@ -1,1 +1,25 @@
-Itineraire à suivre : 1, 2, 4, 6, 5, 4, 3, 2, 6, 7, 1, 
+depart de Place du Maréchal-Foch : 
+Cours Saint-Andre
+Allée du port
+Cours des 50 Otages
+Allée d'Orléan
+Route de Paris
+Boulevard des Belges
+Route de Rennes
+Rue Henri IV
+Rue Gambetta
+Rue de Strasbourg
+Rue des Trois Croissants
+Rue de la Marne
+Rue de la Marne
+Rue des Trois Croissants
+Rue de Strasbourg
+Rue Gambetta
+Rue Henri IV
+Route de Rennes
+Boulevard des Belges
+Route de Paris
+Allée d'Orléan
+Cours des 50 Otages
+Allée du port
+Cours Saint-Andre

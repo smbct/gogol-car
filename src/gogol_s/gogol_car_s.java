@@ -1,4 +1,4 @@
-package gogolS;
+package gogol_s;
 import java.util.Hashtable;
 import java.io.FileReader;
 import java.io.BufferedReader;

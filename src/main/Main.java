@@ -76,7 +76,7 @@ public class Main {
         switch(saisie) {
 
             case 1:
-                gogolS.gogol_car_s car_s = new gogolS.gogol_car_s();
+                gogol_s.gogol_car_s car_s = new gogol_s.gogol_car_s();
                 car_s.calculItineraire(ligne);
                 break;
             case 2:
