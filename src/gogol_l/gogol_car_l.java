@@ -180,6 +180,7 @@ public class gogol_car_l {
         listeSuccesseurs.get(deb).ajouter_rue(new successeur(fin, places.get(fin), nomRue)); //dans la liste de successeur de deb
         listeSuccesseurs.get(fin).ajouter_rue(new successeur(deb, places.get(deb), nomRue)); //dans la liste de successeur de fin
 
+        // mise à jour des degrés
         degre.set(deb, degre.get(deb)+1);
         degre.set(fin, degre.get(fin)+1);
     }
@@ -249,9 +250,9 @@ public class gogol_car_l {
 
         // numérotation des arcs sortants
         successeur suc = listeSuccesseurs.get(sommet);
-        int numero = 1;
-        int numFils = degre.get(sommet);
-        if(sommetPere != -1) {
+        int numero = 1; // point de départ pour numéroter les arcs quelconques
+        int numFils = degre.get(sommet); // point de départ pour numéroter les arcs sortants (c'est à dire les arcs entrants de l'anti-arborescence) -> plus grand numéros possibles
+        if(sommetPere != -1) { // si ce n'est pas l'anti-racine, on ne peut pas utiliser le plus grand numéro
             numFils --;
         }
         while(suc != null) {
