@@ -3,7 +3,7 @@ import java.util.Hashtable;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.lang.Integer;
-import java.util.TreeSet;
+import java.util.LinkedList;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -38,7 +38,7 @@ public class gogol_car_s {
     		BufferedReader reader = new BufferedReader(fr);
     		String tmp, tmp1, tmp2, tmp3;
             //pour les arretes : pour trouver l'ensemble des arettes ayant comme extremité chaque place
-    		Hashtable<String, TreeSet<listeSuccesseur> > noeuds = new Hashtable<String, TreeSet<listeSuccesseur>> (0); //nomplaces => rue adjacentes
+    		Hashtable<String, LinkedList<listeSuccesseur> > noeuds = new Hashtable<String, LinkedList<listeSuccesseur>> (0); //nomplaces => rue adjacentes
 
     		tmp = reader.readLine(); //on lit le nombre de place
             int nbplace = Integer.parseInt(tmp.substring(0,tmp.lastIndexOf(".")));
@@ -49,7 +49,7 @@ public class gogol_car_s {
             for(int i = 0; i<nbplace; ++i) {
             	tmp = reader.readLine();
                 //chaque place est une case de la table de hashage, pour l'instant aucune rue n'y est associe
-            	noeuds.put(tmp.substring(0,tmp.lastIndexOf(".")), new TreeSet<listeSuccesseur>());
+            	noeuds.put(tmp.substring(0,tmp.lastIndexOf(".")), new LinkedList<listeSuccesseur>());
             }
 
             //lecture des rues
@@ -70,8 +70,8 @@ public class gogol_car_s {
                     j.ajoutSucc(parc);
                 }
                 //on ajoute cette rue au esemble de rue ayant les meme extremites
-                noeuds.get(tmp2).add(parc);
-                noeuds.get(tmp3).add(parc);
+                noeuds.get(tmp2).addFirst(parc);
+                noeuds.get(tmp3).addFirst(parc);
             }
             //on prend arbitrairement comme racine le dernier noeud ajoute
             this.racine = parc;
@@ -98,7 +98,7 @@ public class gogol_car_s {
     */
     public String parcours() {
         //ondetermine la place de depart (choix entre les deux etremites de la rue racine), puis on affiche le parcours
-        return "depart de " + encommun(racine, racine.getSucc().first()) + " : \n" + racine.parcours();
+        return "depart de " + encommun(racine, racine.getSucc().getFirst()) + " : \n" + racine.parcours();
     }
 
     /**

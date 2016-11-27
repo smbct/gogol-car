@@ -1,1 +1,25 @@
-Itineraire à suivre : Place Royale, Rond-point de Paris, Place du Cirque, Place Royale, Place Saint-Pierre, Place du Maréchal-Foch, Place Royale, Place du Commerce, Place du Chateau, Place Royale, Rond-point de Rennes, Place du Maréchal-Foch, Place du Chateau, Place du Maréchal-Foch, Place du Commerce, Place du Cirque, Rond-point de Paris, Rond-point de Rennes, Place Royale, 
+depart de Place du Chateau : 
+Cours Saint-Andre
+Rue Gambetta
+Rue de Strasbourg
+Allée du port
+Rue des Trois Croissants
+Cours des 50 Otages
+Allée d'Orléan
+Route de Rennes
+Rue Henri IV
+Route de Paris
+Rue de la Marne
+Rue de la Marne
+Boulevard des Belges
+Boulevard des Belges
+Route de Paris
+Rue Henri IV
+Route de Rennes
+Allée d'Orléan
+Cours des 50 Otages
+Rue des Trois Croissants
+Allée du port
+Rue de Strasbourg
+Rue Gambetta
+Cours Saint-Andre

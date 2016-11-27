@@ -9,7 +9,7 @@ public class listeSuccesseur implements Comparable, Comparator{
 	private String nom; //nom de cette rue
 	private String deb; //nom de la place a une extremite
 	private String fin; //nom de la palce a l'autre extremite
-	private TreeSet<listeSuccesseur> succ; //ensemble des noeuds successeur
+	private LinkedList<listeSuccesseur> succ; //ensemble des noeuds successeur
 
 	private boolean visite; //pour le parcour : note si le noeud a deja ete visite
 
@@ -24,7 +24,7 @@ public class listeSuccesseur implements Comparable, Comparator{
 		this.nom = nom;
 		this.deb = deb;
 		this.fin = fin;
-		succ = new TreeSet<listeSuccesseur>();
+		succ = new LinkedList<listeSuccesseur>();
 		this.visite = false;
 	}
 
@@ -36,7 +36,7 @@ public class listeSuccesseur implements Comparable, Comparator{
 	* @param nouvsucc la rue a ajouter dans l'ensemble des successeur de cette rue
 	*/
 	public void ajoutSucc(listeSuccesseur nouvsucc) {
-		this.succ.add(nouvsucc);
+		this.succ.addFirst(nouvsucc);
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class listeSuccesseur implements Comparable, Comparator{
 	*
 	* @return l'ensemble des rues adjacentes a celle ci
 	*/
-	public TreeSet<listeSuccesseur> getSucc() {return this.succ;}
+	public LinkedList<listeSuccesseur> getSucc() {return this.succ;}
 
 	/**
 	* renvoi la premiere extremite de la rue
@@ -91,7 +91,7 @@ public class listeSuccesseur implements Comparable, Comparator{
 
 	@Override
 	public String toString() {
-		TreeSet<listeSuccesseur> dejaParcouru = new TreeSet<listeSuccesseur>();
+		LinkedList<listeSuccesseur> dejaParcouru = new LinkedList<listeSuccesseur>();
 		return this.toStringrec(dejaParcouru);
 	}
 
@@ -101,7 +101,7 @@ public class listeSuccesseur implements Comparable, Comparator{
 	* @param dejaParcouru l'ensemble des sommet que l'on a deja visite
 	* @rtuen la string contenant toute les information de l'arbre
 	*/
-	private String toStringrec(TreeSet<listeSuccesseur> dejaParcouru){
+	private String toStringrec(LinkedList<listeSuccesseur> dejaParcouru){
 		String res = this.nom + "("+this.deb+" , "+this.fin+")";
 		dejaParcouru.add(this);
 		for(listeSuccesseur parc : this.succ) {

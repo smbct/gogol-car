@@ -358,14 +358,14 @@ public class gogol_car_l {
     /**
     * transforme la representation en liste d'adjacence en une matrice d'adjacence
     * @param matriceAdjacence la matrice qui contient les distances entre les sommets
-    * @param succecesseurs indique les sommet à parcourir pour aller de sommet en sommet
+    * @param successeurs indique les sommet à parcourir pour aller de sommet en sommet
     **/
-    public void transformeMatrice(int matriceAdjacence [][], int succecesseurs[][]) {
+    public void transformeMatrice(int matriceAdjacence [][], int successeurs[][]) {
         //initialisation
         for(int i = 0; i<nbPlace; i++) {
             for(int j = 0; j<nbPlace; j++) {
                 matriceAdjacence[i][j] = Integer.MAX_VALUE; //par defaut aucune arrete
-                succecesseurs[i][j] = -1;
+                successeurs[i][j] = -1;
             }
             matriceAdjacence[i][i] = 0; //un sommet n'est pas distant de lui meme
         }
@@ -376,7 +376,7 @@ public class gogol_car_l {
             parcrec = listeSuccesseurs.get(parc);
             while(parcrec != null) {
                 matriceAdjacence[parc][parcrec.get_sommet()] = 1; //il y a une arete
-                succecesseurs[parc][parcrec.get_sommet()] = parc;
+                successeurs[parc][parcrec.get_sommet()] = parc;
                 parcrec = parcrec.suivant();
             }
         }
