@@ -54,7 +54,7 @@ public class gogol_car_xl {
         for(int i = 0; i < sommetsImpairs.size(); i++) {
             utilise.add(Boolean.FALSE); //au debut aucun sommet n'est encore couple
         }
-
+        
         while(nbCouple != 0) { //tant qu'il reste des couplages a efectuer
 
             // recherche de deux sommets non utilisés qui sont reliés par le plus court chemin
