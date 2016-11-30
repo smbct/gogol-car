@@ -54,7 +54,7 @@ public class gogol_car_xl {
         for(int i = 0; i < sommetsImpairs.size(); i++) {
             utilise.add(Boolean.FALSE); //au debut aucun sommet n'est encore couple
         }
-        
+
         while(nbCouple != 0) { //tant qu'il reste des couplages a efectuer
 
             // recherche de deux sommets non utilisés qui sont reliés par le plus court chemin
@@ -109,9 +109,14 @@ public class gogol_car_xl {
         for(int k=0; k<car_l.getNbPlace(); k++) {
             for(int i=0; i<car_l.getNbPlace(); i++) {
                 for(int j=0; j<car_l.getNbPlace(); j++) {
-                    if (matriceAdjacence[i][k] + matriceAdjacence[k][j] < matriceAdjacence[i][j]) {
-                        matriceAdjacence[i][j] = matriceAdjacence[i][k] + matriceAdjacence[k][j];
-                        successeurs[i][j] = k; //on doit passer par k pour avoir le plus cour chemin
+
+                    if(matriceAdjacence[i][k] != Integer.MAX_VALUE && matriceAdjacence[k][j] != Integer.MAX_VALUE) {
+
+                        if (matriceAdjacence[i][k] + matriceAdjacence[k][j] < matriceAdjacence[i][j]) {
+                            matriceAdjacence[i][j] = matriceAdjacence[i][k] + matriceAdjacence[k][j];
+                            successeurs[i][j] = k; //on doit passer par k pour avoir le plus cour chemin
+                        }
+
                     }
                 }
             }
