@@ -137,7 +137,7 @@ public class gogol_car_xl {
         }
         System.out.print("\nCouplage des sommets : ");
         for(couple parc : couplage) {
-            System.out.print("{ "+car_l.getNomPlace(parc.premier)+" ; "+car_l.getNomPlace(parc.premier)+" } ");
+            System.out.print("{ "+car_l.getNomPlace(parc.premier)+" ; "+car_l.getNomPlace(parc.deuxieme)+" } ");
         }
         System.out.println("\n");
 
